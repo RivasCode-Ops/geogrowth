@@ -1,6 +1,10 @@
-import { nowIso } from '@/core/db';
+import { nowIso } from '@/core/utils/timestamps';
 import { companiesRepository } from '@/features/companies/repository/companies.repository';
 import type { Company } from '@/features/companies/types/company';
+import {
+  CompanyScopeError,
+  resolveCompanyNameForStore,
+} from '@/shared/services/companyScope';
 import { crmRepository } from '@/features/crm/repository/crm.repository';
 import type { Deal, DealWithCompany, SaveDealInput } from '@/features/crm/types/deal';
 import type { DealsFilterStage } from '@/features/crm/types/deal';
@@ -32,11 +36,14 @@ async function assertCompanyBelongsToStore(
   companyId: string,
   storeId: string,
 ): Promise<string> {
-  const company = await companiesRepository.getById(companyId);
-  if (!company || company.storeId !== storeId) {
-    throw new CrmValidationError('Empresa inválida ou não pertence à loja ativa.');
+  try {
+    return await resolveCompanyNameForStore(companyId, storeId);
+  } catch (error) {
+    if (error instanceof CompanyScopeError) {
+      throw new CrmValidationError(error.message);
+    }
+    throw error;
   }
-  return company.name;
 }
 
 export const crmService = {

@@ -10,7 +10,8 @@ import type {
   SaveCompanyInput,
 } from '@/features/companies/types/company';
 import { defaultCompaniesFilters } from '@/features/companies/types/company';
-import { useStoreStore } from '@/features/store/store/store.store';
+import { mapFeatureError } from '@/shared/errors/mapFeatureError';
+import { getActiveStoreContext } from '@/shared/store/activeStoreContext';
 
 type CompaniesSliceState = {
   items: Company[];
@@ -34,23 +35,7 @@ type CompaniesSliceActions = {
 
 export type CompaniesSlice = CompaniesSliceState & CompaniesSliceActions;
 
-function getActiveStoreContext(): { storeId: string; tenantId: string } | null {
-  const active = useStoreStore.getState().activeStore;
-  if (!active?.storeId || !active.tenantId) {
-    return null;
-  }
-  return { storeId: active.storeId, tenantId: active.tenantId };
-}
-
-function mapError(error: unknown): string {
-  if (error instanceof CompanyStoreRequiredError || error instanceof CompanyValidationError) {
-    return error.message;
-  }
-  if (error instanceof Error) {
-    return error.message;
-  }
-  return 'Ocorreu um erro inesperado.';
-}
+const knownErrors = [CompanyStoreRequiredError, CompanyValidationError] as const;
 
 export const useCompaniesStore = create<CompaniesSlice>((set, get) => ({
   items: [],
@@ -73,7 +58,7 @@ export const useCompaniesStore = create<CompaniesSlice>((set, get) => ({
       const items = await companiesService.list(ctx.storeId, ctx.tenantId, get().filters);
       set({ items, isLoading: false });
     } catch (error) {
-      set({ isLoading: false, error: mapError(error) });
+      set({ isLoading: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -104,7 +89,7 @@ export const useCompaniesStore = create<CompaniesSlice>((set, get) => ({
       set({ editingId: null, isSaving: false });
       await get().loadCompanies();
     } catch (error) {
-      set({ isSaving: false, error: mapError(error) });
+      set({ isSaving: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -123,7 +108,7 @@ export const useCompaniesStore = create<CompaniesSlice>((set, get) => ({
       }
       await get().loadCompanies();
     } catch (error) {
-      set({ error: mapError(error) });
+      set({ error: mapFeatureError(error, knownErrors) });
     }
   },
 }));

@@ -15,9 +15,7 @@ import {
   type VisitRecord,
 } from '@/core/db/schema';
 
-export function nowIso(): string {
-  return new Date().toISOString();
-}
+export { nowIso } from '@/core/utils/timestamps';
 
 export class GeoGrowthDB extends Dexie {
   stores!: Table<StoreRecord, string>;

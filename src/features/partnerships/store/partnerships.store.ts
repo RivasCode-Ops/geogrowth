@@ -10,7 +10,8 @@ import type {
   PartnershipWithCompany,
   SavePartnershipInput,
 } from '@/features/partnerships/types/partnership';
-import { useStoreStore } from '@/features/store/store/store.store';
+import { mapFeatureError } from '@/shared/errors/mapFeatureError';
+import { getActiveStoreContext } from '@/shared/store/activeStoreContext';
 
 type PartnershipsSliceState = {
   items: PartnershipWithCompany[];
@@ -35,26 +36,7 @@ type PartnershipsSliceActions = {
 
 export type PartnershipsSlice = PartnershipsSliceState & PartnershipsSliceActions;
 
-function getActiveStoreContext(): { storeId: string; tenantId: string } | null {
-  const active = useStoreStore.getState().activeStore;
-  if (!active?.storeId || !active.tenantId) {
-    return null;
-  }
-  return { storeId: active.storeId, tenantId: active.tenantId };
-}
-
-function mapError(error: unknown): string {
-  if (
-    error instanceof PartnershipStoreRequiredError ||
-    error instanceof PartnershipValidationError
-  ) {
-    return error.message;
-  }
-  if (error instanceof Error) {
-    return error.message;
-  }
-  return 'Ocorreu um erro inesperado.';
-}
+const knownErrors = [PartnershipStoreRequiredError, PartnershipValidationError] as const;
 
 export const usePartnershipsStore = create<PartnershipsSlice>((set, get) => ({
   items: [],
@@ -85,7 +67,7 @@ export const usePartnershipsStore = create<PartnershipsSlice>((set, get) => ({
       ]);
       set({ items, companies, isLoading: false });
     } catch (error) {
-      set({ isLoading: false, error: mapError(error) });
+      set({ isLoading: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -116,7 +98,7 @@ export const usePartnershipsStore = create<PartnershipsSlice>((set, get) => ({
       set({ editingId: null, isSaving: false });
       await get().loadPartnerships();
     } catch (error) {
-      set({ isSaving: false, error: mapError(error) });
+      set({ isSaving: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -134,7 +116,7 @@ export const usePartnershipsStore = create<PartnershipsSlice>((set, get) => ({
       }
       await get().loadPartnerships();
     } catch (error) {
-      set({ error: mapError(error) });
+      set({ error: mapFeatureError(error, knownErrors) });
     }
   },
 }));

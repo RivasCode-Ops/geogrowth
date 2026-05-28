@@ -1,4 +1,4 @@
-import { nowIso } from '@/core/db';
+import { nowIso } from '@/core/utils/timestamps';
 import { storeRepository } from '@/features/store/repository/store.repository';
 import type { SaveStoreInput, Store } from '@/features/store/types/store';
 

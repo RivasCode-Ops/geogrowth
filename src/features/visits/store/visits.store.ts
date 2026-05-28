@@ -10,7 +10,8 @@ import type {
   VisitsFilterStatus,
   VisitWithCompany,
 } from '@/features/visits/types/visit';
-import { useStoreStore } from '@/features/store/store/store.store';
+import { mapFeatureError } from '@/shared/errors/mapFeatureError';
+import { getActiveStoreContext } from '@/shared/store/activeStoreContext';
 
 type VisitsSliceState = {
   visits: VisitWithCompany[];
@@ -35,23 +36,7 @@ type VisitsSliceActions = {
 
 export type VisitsSlice = VisitsSliceState & VisitsSliceActions;
 
-function getActiveStoreContext(): { storeId: string; tenantId: string } | null {
-  const active = useStoreStore.getState().activeStore;
-  if (!active?.storeId || !active.tenantId) {
-    return null;
-  }
-  return { storeId: active.storeId, tenantId: active.tenantId };
-}
-
-function mapError(error: unknown): string {
-  if (error instanceof VisitStoreRequiredError || error instanceof VisitValidationError) {
-    return error.message;
-  }
-  if (error instanceof Error) {
-    return error.message;
-  }
-  return 'Ocorreu um erro inesperado.';
-}
+const knownErrors = [VisitStoreRequiredError, VisitValidationError] as const;
 
 export const useVisitsStore = create<VisitsSlice>((set, get) => ({
   visits: [],
@@ -82,7 +67,7 @@ export const useVisitsStore = create<VisitsSlice>((set, get) => ({
       ]);
       set({ visits, companies, isLoading: false });
     } catch (error) {
-      set({ isLoading: false, error: mapError(error) });
+      set({ isLoading: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -113,7 +98,7 @@ export const useVisitsStore = create<VisitsSlice>((set, get) => ({
       set({ editingId: null, isSaving: false });
       await get().loadVisits();
     } catch (error) {
-      set({ isSaving: false, error: mapError(error) });
+      set({ isSaving: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -131,7 +116,7 @@ export const useVisitsStore = create<VisitsSlice>((set, get) => ({
       }
       await get().loadVisits();
     } catch (error) {
-      set({ error: mapError(error) });
+      set({ error: mapFeatureError(error, knownErrors) });
     }
   },
 }));

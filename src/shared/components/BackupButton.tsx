@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { exportBackup } from '@/core/backup/exportBackup';
+import { FeatureAlert } from '@/shared/components/FeatureAlert';
 
 export function BackupButton() {
   const [isExporting, setIsExporting] = useState(false);
@@ -28,11 +29,7 @@ export function BackupButton() {
       >
         {isExporting ? 'Exportando…' : 'Exportar backup JSON'}
       </button>
-      {error ? (
-        <p className="store-alert" role="alert">
-          {error}
-        </p>
-      ) : null}
+      {error ? <FeatureAlert message={error} /> : null}
       <p className="store-form__hint">
         Baixa todas as tabelas locais (lojas, empresas, territórios, CRM, visitas, parcerias).
       </p>

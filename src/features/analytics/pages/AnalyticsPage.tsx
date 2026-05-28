@@ -7,6 +7,9 @@ import {
 import type { AnalyticsSummary } from '@/features/analytics/types/analytics';
 import '@/features/analytics/components/analytics.css';
 import { useStoreStore } from '@/features/store/store/store.store';
+import { FeatureAlert } from '@/shared/components/FeatureAlert';
+import { FeatureEmptyState } from '@/shared/components/FeatureEmptyState';
+import { FeatureToolbar } from '@/shared/components/FeatureToolbar';
 
 export function AnalyticsPage() {
   const activeStore = useStoreStore((s) => s.activeStore);
@@ -53,19 +56,17 @@ export function AnalyticsPage() {
 
   return (
     <section className="feature-page">
-      <h1>Analytics</h1>
-      <p>Resumo agregado da loja ativa (somente leitura).</p>
+      <FeatureToolbar
+        title="Analytics"
+        description="Resumo agregado da loja ativa (somente leitura)."
+      />
 
-      {error ? (
-        <p className="analytics-alert" role="alert">
-          {error}
-        </p>
-      ) : null}
+      {error ? <FeatureAlert message={error} /> : null}
 
       {!activeStore ? (
-        <p className="analytics-alert">
+        <FeatureEmptyState>
           Cadastre uma loja em <strong>Loja</strong> para ver métricas.
-        </p>
+        </FeatureEmptyState>
       ) : isLoading ? (
         <p>Carregando…</p>
       ) : summary ? (

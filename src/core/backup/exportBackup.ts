@@ -1,4 +1,5 @@
-import { db, nowIso } from '@/core/db';
+import { db } from '@/core/db';
+import { nowIso } from '@/core/utils/timestamps';
 import { DB_VERSION } from '@/core/db/schema';
 
 export type BackupPayload = {
@@ -32,6 +33,8 @@ export async function buildBackupPayload(): Promise<BackupPayload> {
     data: { stores, companies, territories, deals, visits, partnerships },
   };
 }
+
+// TODO(pós-MVP): importBackup() para restaurar JSON exportado com validação de versão.
 
 export async function exportBackup(): Promise<void> {
   const payload = await buildBackupPayload();

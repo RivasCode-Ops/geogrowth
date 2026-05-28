@@ -1,4 +1,5 @@
-export { db, GeoGrowthDB, nowIso } from '@/core/db/dexie.db';
+export { db, GeoGrowthDB } from '@/core/db/dexie.db';
+export { nowIso } from '@/core/utils/timestamps';
 export {
   DB_SCHEMA_V1,
   DB_SCHEMA_V2,

@@ -5,7 +5,8 @@ import {
   TerritoryValidationError,
 } from '@/features/territory/services/territory.service';
 import type { SaveTerritoryInput, Territory } from '@/features/territory/types/territory';
-import { useStoreStore } from '@/features/store/store/store.store';
+import { mapFeatureError } from '@/shared/errors/mapFeatureError';
+import { getActiveStoreContext } from '@/shared/store/activeStoreContext';
 
 type TerritorySliceState = {
   items: Territory[];
@@ -29,26 +30,7 @@ type TerritorySliceActions = {
 
 export type TerritorySlice = TerritorySliceState & TerritorySliceActions;
 
-function getActiveStoreContext(): { storeId: string; tenantId: string } | null {
-  const active = useStoreStore.getState().activeStore;
-  if (!active?.storeId || !active.tenantId) {
-    return null;
-  }
-  return { storeId: active.storeId, tenantId: active.tenantId };
-}
-
-function mapError(error: unknown): string {
-  if (
-    error instanceof TerritoryStoreRequiredError ||
-    error instanceof TerritoryValidationError
-  ) {
-    return error.message;
-  }
-  if (error instanceof Error) {
-    return error.message;
-  }
-  return 'Ocorreu um erro inesperado.';
-}
+const knownErrors = [TerritoryStoreRequiredError, TerritoryValidationError] as const;
 
 export const useTerritoryStore = create<TerritorySlice>((set, get) => ({
   items: [],
@@ -74,7 +56,7 @@ export const useTerritoryStore = create<TerritorySlice>((set, get) => ({
       const items = await territoryService.list(ctx.storeId, ctx.tenantId);
       set({ items, isLoading: false });
     } catch (error) {
-      set({ isLoading: false, error: mapError(error) });
+      set({ isLoading: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -102,7 +84,7 @@ export const useTerritoryStore = create<TerritorySlice>((set, get) => ({
       set({ editingId: null, isSaving: false });
       await get().loadTerritories();
     } catch (error) {
-      set({ isSaving: false, error: mapError(error) });
+      set({ isSaving: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -121,7 +103,7 @@ export const useTerritoryStore = create<TerritorySlice>((set, get) => ({
       set({ selectedId: nextSelected, editingId: nextEditing });
       await get().loadTerritories();
     } catch (error) {
-      set({ error: mapError(error) });
+      set({ error: mapFeatureError(error, knownErrors) });
     }
   },
 }));

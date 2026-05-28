@@ -6,7 +6,8 @@ import {
   CrmValidationError,
 } from '@/features/crm/services/crm.service';
 import type { DealWithCompany, DealsFilterStage, SaveDealInput } from '@/features/crm/types/deal';
-import { useStoreStore } from '@/features/store/store/store.store';
+import { mapFeatureError } from '@/shared/errors/mapFeatureError';
+import { getActiveStoreContext } from '@/shared/store/activeStoreContext';
 
 type CrmSliceState = {
   deals: DealWithCompany[];
@@ -31,23 +32,7 @@ type CrmSliceActions = {
 
 export type CrmSlice = CrmSliceState & CrmSliceActions;
 
-function getActiveStoreContext(): { storeId: string; tenantId: string } | null {
-  const active = useStoreStore.getState().activeStore;
-  if (!active?.storeId || !active.tenantId) {
-    return null;
-  }
-  return { storeId: active.storeId, tenantId: active.tenantId };
-}
-
-function mapError(error: unknown): string {
-  if (error instanceof CrmStoreRequiredError || error instanceof CrmValidationError) {
-    return error.message;
-  }
-  if (error instanceof Error) {
-    return error.message;
-  }
-  return 'Ocorreu um erro inesperado.';
-}
+const knownErrors = [CrmStoreRequiredError, CrmValidationError] as const;
 
 export const useCrmStore = create<CrmSlice>((set, get) => ({
   deals: [],
@@ -78,7 +63,7 @@ export const useCrmStore = create<CrmSlice>((set, get) => ({
       ]);
       set({ deals, companies, isLoading: false });
     } catch (error) {
-      set({ isLoading: false, error: mapError(error) });
+      set({ isLoading: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -109,7 +94,7 @@ export const useCrmStore = create<CrmSlice>((set, get) => ({
       set({ editingId: null, isSaving: false });
       await get().loadDeals();
     } catch (error) {
-      set({ isSaving: false, error: mapError(error) });
+      set({ isSaving: false, error: mapFeatureError(error, knownErrors) });
     }
   },
 
@@ -127,7 +112,7 @@ export const useCrmStore = create<CrmSlice>((set, get) => ({
       }
       await get().loadDeals();
     } catch (error) {
-      set({ error: mapError(error) });
+      set({ error: mapFeatureError(error, knownErrors) });
     }
   },
 }));

@@ -1,6 +1,10 @@
-import { nowIso } from '@/core/db';
+import { nowIso } from '@/core/utils/timestamps';
 import { companiesRepository } from '@/features/companies/repository/companies.repository';
 import type { Company } from '@/features/companies/types/company';
+import {
+  CompanyScopeError,
+  resolveCompanyNameForStore,
+} from '@/shared/services/companyScope';
 import { partnershipsRepository } from '@/features/partnerships/repository/partnerships.repository';
 import type {
   Partnership,
@@ -53,14 +57,17 @@ async function resolveCompanyName(
   companyId: string,
   storeId: string,
 ): Promise<string | null> {
-  if (!companyId) {
+  if (!companyId.trim()) {
     return null;
   }
-  const company = await companiesRepository.getById(companyId);
-  if (!company || company.storeId !== storeId) {
-    throw new PartnershipValidationError('Empresa inválida ou não pertence à loja ativa.');
+  try {
+    return await resolveCompanyNameForStore(companyId, storeId);
+  } catch (error) {
+    if (error instanceof CompanyScopeError) {
+      throw new PartnershipValidationError(error.message);
+    }
+    throw error;
   }
-  return company.name;
 }
 
 async function enrichPartnership(partnership: Partnership): Promise<PartnershipWithCompany> {

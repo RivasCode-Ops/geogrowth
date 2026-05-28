@@ -1,4 +1,4 @@
-import { nowIso } from '@/core/db';
+import { nowIso } from '@/core/utils/timestamps';
 import type { TerritoryBounds } from '@/core/db/schema';
 import { territoryRepository } from '@/features/territory/repository/territory.repository';
 import type { SaveTerritoryInput, Territory } from '@/features/territory/types/territory';

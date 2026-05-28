@@ -5,6 +5,9 @@ import { CompanyForm } from '@/features/companies/components/CompanyForm';
 import { useCompaniesStore } from '@/features/companies/store/companies.store';
 import '@/features/companies/components/companies.css';
 import { useStoreStore } from '@/features/store/store/store.store';
+import { FeatureAlert } from '@/shared/components/FeatureAlert';
+import { FeatureEmptyState } from '@/shared/components/FeatureEmptyState';
+import { FeatureToolbar } from '@/shared/components/FeatureToolbar';
 
 export function CompaniesPage() {
   const activeStore = useStoreStore((s) => s.activeStore);
@@ -37,28 +40,28 @@ export function CompaniesPage() {
 
   return (
     <section className="feature-page companies-layout">
-      <div className="companies-toolbar">
-        <div>
-          <h1>Empresas</h1>
-          <p>Gerencie empresas da loja ativa (dados locais).</p>
-        </div>
-        {activeStore && !showForm ? (
-          <button type="button" className="companies-btn companies-btn--primary" onClick={startCreate}>
-            Nova empresa
-          </button>
-        ) : null}
-      </div>
+      <FeatureToolbar
+        title="Empresas"
+        description="Gerencie empresas da loja ativa (dados locais)."
+        actions={
+          activeStore && !showForm ? (
+            <button
+              type="button"
+              className="companies-btn companies-btn--primary"
+              onClick={startCreate}
+            >
+              Nova empresa
+            </button>
+          ) : null
+        }
+      />
 
-      {error ? (
-        <p className="companies-alert" role="alert">
-          {error}
-        </p>
-      ) : null}
+      {error ? <FeatureAlert message={error} /> : null}
 
       {!activeStore ? (
-        <p className="companies-empty">
+        <FeatureEmptyState>
           Cadastre uma loja em <strong>Loja</strong> para listar e salvar empresas.
-        </p>
+        </FeatureEmptyState>
       ) : (
         <>
           <CompaniesFilters filters={filters} onChange={setFilters} />

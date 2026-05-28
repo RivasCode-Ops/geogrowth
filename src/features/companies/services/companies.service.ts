@@ -1,4 +1,4 @@
-import { nowIso } from '@/core/db';
+import { nowIso } from '@/core/utils/timestamps';
 import { companiesRepository } from '@/features/companies/repository/companies.repository';
 import type {
   CompaniesFilters,

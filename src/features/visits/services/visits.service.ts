@@ -1,6 +1,10 @@
-import { nowIso } from '@/core/db';
+import { nowIso } from '@/core/utils/timestamps';
 import { companiesRepository } from '@/features/companies/repository/companies.repository';
 import type { Company } from '@/features/companies/types/company';
+import {
+  CompanyScopeError,
+  resolveCompanyNameForStore,
+} from '@/shared/services/companyScope';
 import { visitsRepository } from '@/features/visits/repository/visits.repository';
 import type {
   SaveVisitInput,
@@ -28,11 +32,14 @@ async function assertCompanyBelongsToStore(
   companyId: string,
   storeId: string,
 ): Promise<string> {
-  const company = await companiesRepository.getById(companyId);
-  if (!company || company.storeId !== storeId) {
-    throw new VisitValidationError('Empresa inválida ou não pertence à loja ativa.');
+  try {
+    return await resolveCompanyNameForStore(companyId, storeId);
+  } catch (error) {
+    if (error instanceof CompanyScopeError) {
+      throw new VisitValidationError(error.message);
+    }
+    throw error;
   }
-  return company.name;
 }
 
 function validateScheduledAt(value: string): string {

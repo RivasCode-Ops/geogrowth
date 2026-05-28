@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-**Bloco 7 concluído** — feature `visits`: CRUD de visitas por empresa, status planned/done/cancelled, ordenação por `scheduledAt`. Dexie v5.
+**Bloco 8 concluído** — feature `partnerships`: CRUD de parcerias (parceiro, tipo, vigência, `companyId` opcional), filtro por tipo, escopo por `storeId`. Dexie v6.
 
 ## Workspace
 
@@ -11,8 +11,7 @@
 
 ## Próximos passos
 
-1. **Bloco 8** — feature `partnerships`.
-2. **Bloco 9** — analytics + PWA.
+1. **Bloco 9** — analytics + PWA + backup export.
 
 ## Decisões
 

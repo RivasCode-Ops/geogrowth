@@ -1,7 +1,7 @@
 import type { BaseEntity } from '@/core/types/base.entity';
 
 /** Versão atual do IndexedDB — incrementar ao alterar stores(). */
-export const DB_VERSION = 5;
+export const DB_VERSION = 6;
 
 export interface StoreRecord extends BaseEntity {
   name: string;
@@ -80,4 +80,21 @@ export interface VisitRecord extends BaseEntity {
 export const DB_SCHEMA_V5 = {
   ...DB_SCHEMA_V4,
   visits: 'id, storeId, companyId, scheduledAt, status, tenantId, updatedAt, syncStatus',
+} as const;
+
+export type PartnershipType = 'comercial' | 'tecnica' | 'marketing' | 'distribuicao' | 'outro';
+
+export interface PartnershipRecord extends BaseEntity {
+  partnerName: string;
+  type: PartnershipType;
+  validFrom: string;
+  validTo: string;
+  /** Vazio quando não vinculado a empresa. */
+  companyId: string;
+}
+
+/** v6: partnerships (parcerias por loja). */
+export const DB_SCHEMA_V6 = {
+  ...DB_SCHEMA_V5,
+  partnerships: 'id, storeId, companyId, type, tenantId, updatedAt, syncStatus',
 } as const;

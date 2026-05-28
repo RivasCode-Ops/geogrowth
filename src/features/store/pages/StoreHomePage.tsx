@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { StoreForm } from '@/features/store/components/StoreForm';
 import { useStoreStore } from '@/features/store/store/store.store';
+import { BackupButton } from '@/shared/components/BackupButton';
 
 export function StoreHomePage() {
   const activeStore = useStoreStore((s) => s.activeStore);
@@ -47,6 +48,10 @@ export function StoreHomePage() {
           )}
 
           <StoreForm store={activeStore} isSaving={isSaving} onSubmit={saveStore} />
+
+          <hr style={{ margin: '2rem 0', border: 'none', borderTop: '1px solid var(--color-border)' }} />
+          <h2 style={{ fontSize: '1rem', margin: '0 0 0.5rem' }}>Backup local</h2>
+          <BackupButton />
         </>
       )}
     </section>

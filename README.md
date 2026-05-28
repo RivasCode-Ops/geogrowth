@@ -7,6 +7,7 @@ App offline-first para crescimento territorial: loja, empresas, mapa, CRM, visit
 - React 19 + Vite + TypeScript (strict)
 - Zustand, Dexie (IndexedDB)
 - [Leaflet](https://leafletjs.com/) — mapa em Território (tiles OpenStreetMap quando online)
+- [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) — shell PWA + service worker
 - Arquitetura feature-based em `src/features/`
 
 ## Desenvolvimento
@@ -23,6 +24,12 @@ npm run typecheck   # verificação de tipos
 npm run build       # build de produção
 npm run preview     # preview do build
 ```
+
+## PWA e backup
+
+- Após `npm run build`, o service worker é gerado em `dist/` (Workbox).
+- **Backup JSON**: botão em **Loja** exporta todas as tabelas IndexedDB.
+- Ícones PWA placeholder em `public/icons/` (substitua em produção).
 
 ## Estrutura
 

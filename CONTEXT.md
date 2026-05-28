@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-**Bloco 8 concluído** — feature `partnerships`: CRUD de parcerias (parceiro, tipo, vigência, `companyId` opcional), filtro por tipo, escopo por `storeId`. Dexie v6.
+**Bloco 9 concluído** — analytics (leitura agregada), export backup JSON, PWA (`vite-plugin-pwa` + `registerSW`). Todas as features do MVP local implementadas.
 
 ## Workspace
 
@@ -11,10 +11,11 @@
 
 ## Próximos passos
 
-1. **Bloco 9** — analytics + PWA + backup export.
+1. **Bloco 10** — revisão/padronização (`10-revisao-padronizacao.md`) se desejado.
+2. Substituir ícones PWA placeholder; testar instalação PWA em produção.
 
 ## Decisões
 
 - Arquitetura feature-based; UI não acessa Dexie.
-- Sem backend nesta fase.
+- Sem backend / sync cloud nesta fase.
 - Org GitHub: `RivasCode-Ops`.

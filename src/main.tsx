@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client';
 import { App } from '@/app/App';
 import '@/core/theme/tokens.css';
 import '@/index.css';
+import { registerAppServiceWorker } from '@/pwa/registerSW';
+
+registerAppServiceWorker();
 
 const root = document.getElementById('root');
 if (!root) {

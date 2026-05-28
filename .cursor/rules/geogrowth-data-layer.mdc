@@ -1,0 +1,37 @@
+---
+description: GeoGrowth — Dexie, repositories e services
+globs: src/core/db/**,src/**/repository/**,src/**/services/**
+alwaysApply: false
+---
+
+# Camada de dados
+
+## Dexie
+
+- Uma instância em `src/core/db/dexie.db.ts`.
+- Schema e versões em `src/core/db/schema.ts`.
+- Migrations incrementais por `version()`; nunca apagar dados em dev sem aviso.
+
+## Repository
+
+- Único lugar que chama `db.table()`.
+- Métodos explícitos: `getById`, `list`, `create`, `update`, `delete`, `listByStore`.
+- Sempre atualizar `updatedAt` e manter `syncStatus` coerente (`local` ao criar/editar offline).
+- Filtrar por `storeId` / `tenantId` quando a listagem for da loja ativa.
+
+## Service
+
+- Orquestra repositories; valida entrada; aplica regras de negócio.
+- Não importa React nem Zustand.
+- Lançar erros tipados ou retornar `Result` — não engolir falhas.
+
+## Store (Zustand)
+
+- Chama **service**, nunca repository direto (exceto bootstrap documentado).
+- Estado de UI (loading, error, filters) pode ficar no slice.
+- Ações assíncronas: loading → success/error.
+
+## IndexedDB
+
+- Nomes de tabelas no plural, camelCase: `companies`, `visits`.
+- Índices para `storeId`, `updatedAt` onde houver listagem.

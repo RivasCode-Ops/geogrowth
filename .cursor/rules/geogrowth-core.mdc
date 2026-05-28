@@ -1,0 +1,49 @@
+---
+description: GeoGrowth — stack, arquitetura feature-based e limites do projeto
+alwaysApply: true
+---
+
+# GeoGrowth — regras centrais
+
+## Stack
+
+- React 18+ com Vite e TypeScript (strict).
+- Estado global: Zustand (slices por feature em `features/{nome}/store/`).
+- Persistência local: Dexie / IndexedDB.
+- Roteamento: React Router.
+- PWA: shell offline; service worker via plugin Vite PWA quando configurado.
+
+## Arquitetura
+
+- **Feature-based**: cada domínio em `src/features/{nome}/`.
+- Camadas por feature: `types` → `repository` → `service` → `store` → `pages` + `components`.
+- Código compartilhado só em `src/shared/` ou `src/core/` — nunca copiar lógica entre features.
+
+## Proibições
+
+- UI, pages e components **não** importam Dexie nem `core/db` diretamente.
+- **Não** colocar regra de negócio em `pages/` ou componentes de formulário.
+- **Não** usar `localStorage` para dados de domínio (apenas preferências leves de UI, se necessário).
+- **Não** criar backend, REST, GraphQL, Supabase ou sync remoto real nesta fase.
+- **Não** reestruturar o projeto inteiro sem escopo explícito no prompt.
+
+## Entidades base
+
+Toda entidade persistida estende ou inclui:
+
+- `id`, `syncStatus`, `updatedAt`, `tenantId`, `storeId`
+
+`syncStatus`: `'local' | 'pending' | 'synced' | 'error'`.
+
+## Workflow com o agente
+
+- Uma feature ou bloco por vez; listar arquivos exatos a criar/alterar.
+- Seguir padrão de `features/store` quando existir.
+- Componentes pequenos; tipagem estrita; sem `any` evitável.
+- Ao terminar: garantir que `npm run typecheck` passaria nos arquivos tocados.
+
+## Escopo de edição
+
+- Não alterar features não mencionadas no prompt.
+- Não adicionar dependências npm sem pedido explícito.
+- Preferir editar o mínimo de arquivos para cumprir o pedido.

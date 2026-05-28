@@ -1,0 +1,39 @@
+---
+description: GeoGrowth — páginas, componentes e stores de features
+globs: src/features/**/*
+alwaysApply: false
+---
+
+# Features
+
+## Estrutura obrigatória
+
+```text
+features/{feature}/
+├── types/
+├── repository/
+├── services/
+├── store/
+├── pages/
+└── components/
+```
+
+## Pages
+
+- Apenas composição: hooks do slice, handlers que delegam ao store/service.
+- Sem queries Dexie; sem validação complexa inline.
+
+## Components
+
+- Props tipadas; formulários controlados; tabelas em componentes separados.
+- Um componente = uma responsabilidade (Form, Table, Filters, Card).
+
+## Referência
+
+- Nova feature deve espelhar `features/store` (imports, naming, padrão de store).
+
+## Features do produto
+
+`store`, `companies`, `territory`, `crm`, `visits`, `partnerships`, `analytics`.
+
+Não misturar domínios: CRM não importa internals de `territory`, só tipos/shared.

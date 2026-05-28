@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-Repositório criado (local + GitHub). Código de aplicação ainda não iniciado — próximo passo: Bloco 1 (Vite + estrutura feature-based).
+**Bloco 1 concluído** — Vite + React + TS, alias `@/`, pastas feature-based, dependências Zustand e Dexie instaladas. App placeholder em `src/app/App.tsx`.
 
 ## Workspace
 
@@ -11,10 +11,9 @@ Repositório criado (local + GitHub). Código de aplicação ainda não iniciado
 
 ## Próximos passos
 
-1. Abrir `geogrowth` no Cursor.
-2. Executar prompt `01-base-projeto.md` (kit workbench).
-3. Bloco 2: layout/rotas + Dexie.
-4. Bloco 3+: features (`store` primeiro).
+1. **Bloco 2** — `02-layout-rotas.md` e/ou `02-banco-contratos.md`: AppShell, React Router, Dexie schema, `base.entity.ts`.
+2. **Bloco 3** — feature `store` (referência para as demais).
+3. Blocos 4–9: companies → territory → crm → visits → partnerships → analytics + PWA.
 
 ## Decisões
 

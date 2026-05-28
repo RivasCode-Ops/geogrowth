@@ -2,34 +2,48 @@
 
 App offline-first para crescimento territorial: loja, empresas, mapa, CRM, visitas, parcerias e analytics.
 
-## Stack (planejado)
+## Stack
 
-- React + Vite + TypeScript
-- Zustand, Dexie (IndexedDB), React Router
-- PWA
+- React 19 + Vite + TypeScript (strict)
+- Zustand, Dexie (IndexedDB)
+- Arquitetura feature-based em `src/features/`
 
 ## Desenvolvimento
 
 ```bash
 npm install
 npm run dev
-npm run typecheck
-npm run build
 ```
 
-> O esqueleto Vite/React será criado no **Bloco 1** (`prompts/01-base-projeto.md` do kit workbench).
+Abra [http://localhost:5173](http://localhost:5173).
+
+```bash
+npm run typecheck   # verificação de tipos
+npm run build       # build de produção
+npm run preview     # preview do build
+```
+
+## Estrutura
+
+```text
+src/
+├── app/          # App, router, providers (Bloco 2+)
+├── core/         # db, types, layout, theme
+├── features/     # domínios (store, companies, …)
+└── shared/       # componentes e hooks reutilizáveis
+```
 
 ## Método de trabalho (Cursor)
 
-Orquestração por feature — kit em `c:\_PROJETOS\workbench\GeoGrowth-Cursor\`:
+Kit em `c:\_PROJETOS\workbench\GeoGrowth-Cursor\`:
 
 - Regras: `.cursor/rules/`
-- Prompts por bloco: `GeoGrowth-Cursor/prompts/`
-- Checklist: `GeoGrowth-Cursor/CHECKLIST-REVISAO.md`
+- Prompts por bloco: `prompts/`
+- Checklist: `CHECKLIST-REVISAO.md`
 
-## Repositórios relacionados
+## Repositórios
 
 | Repo | URL |
 |------|-----|
-| GeoGrowth (este) | https://github.com/RivasCode-Ops/geogrowth |
-| PROMPT METHOD HUB | https://github.com/RivasCode-Ops/workbench |
+| GeoGrowth | https://github.com/RivasCode-Ops/geogrowth |
+| Workbench | https://github.com/RivasCode-Ops/workbench |

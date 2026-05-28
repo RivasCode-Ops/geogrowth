@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-**Bloco 5 concluído** — feature `territory`: CRUD de áreas (bbox), mapa Leaflet/OSM, tabela `territories` (Dexie v3), escopo por `storeId`.
+**Bloco 6 concluído** — feature `crm`: CRUD de oportunidades (`deals`) por `companyId` + `storeId`, estágios lead/negociação/ganho/perdido, board Kanban. Dexie v4.
 
 ## Workspace
 
@@ -11,8 +11,8 @@
 
 ## Próximos passos
 
-1. **Bloco 6** — feature `crm`.
-2. Blocos 7–9: visits → partnerships → analytics + PWA.
+1. **Bloco 7** — feature `visits`.
+2. Blocos 8–9: partnerships → analytics + PWA.
 
 ## Decisões
 

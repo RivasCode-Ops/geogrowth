@@ -4,7 +4,7 @@ import { AnalyticsPage } from '@/features/analytics/pages/AnalyticsPage';
 import { CompaniesPage } from '@/features/companies/pages/CompaniesPage';
 import { CrmPage } from '@/features/crm/pages/CrmPage';
 import { PartnershipsPage } from '@/features/partnerships/pages/PartnershipsPage';
-import { StorePage } from '@/features/store/pages/StorePage';
+import { StoreHomePage } from '@/features/store/pages/StoreHomePage';
 import { TerritoryPage } from '@/features/territory/pages/TerritoryPage';
 import { VisitsPage } from '@/features/visits/pages/VisitsPage';
 
@@ -12,7 +12,7 @@ export function AppRouter() {
   return (
     <Routes>
       <Route element={<AppShell />}>
-        <Route index element={<StorePage />} />
+        <Route index element={<StoreHomePage />} />
         <Route path="companies" element={<CompaniesPage />} />
         <Route path="territory" element={<TerritoryPage />} />
         <Route path="crm" element={<CrmPage />} />

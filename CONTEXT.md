@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-**Bloco 2 concluído** — AppShell + React Router (7 rotas placeholder), tema (`tokens.css`), Dexie v1 (`stores`, `companies`) e `BaseEntity`. UI não importa `db` diretamente.
+**Bloco 3 concluído** — feature `store` (referência): repository → service → Zustand → `StoreHomePage` + `StoreForm`. Loja ativa com `storeId`/`tenantId` no slice global. Push em `origin/main`.
 
 ## Workspace
 
@@ -11,8 +11,8 @@
 
 ## Próximos passos
 
-1. **Bloco 3** — feature `store` (CRUD loja, referência para demais features).
-2. Blocos 4–9: companies → territory → crm → visits → partnerships → analytics + PWA.
+1. **Bloco 4** — feature `companies`.
+2. Blocos 5–9: territory → crm → visits → partnerships → analytics + PWA.
 
 ## Decisões
 

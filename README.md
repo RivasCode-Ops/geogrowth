@@ -6,6 +6,7 @@ App offline-first para crescimento territorial: loja, empresas, mapa, CRM, visit
 
 - React 19 + Vite + TypeScript (strict)
 - Zustand, Dexie (IndexedDB)
+- [Leaflet](https://leafletjs.com/) — mapa em Território (tiles OpenStreetMap quando online)
 - Arquitetura feature-based em `src/features/`
 
 ## Desenvolvimento

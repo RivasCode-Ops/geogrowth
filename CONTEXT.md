@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-**Bloco 4 concluído** — feature `companies`: CRUD local, filtros (nome, status, tag), listagem por `storeId` da loja ativa. Dexie v2 com índice `status` em `companies`.
+**Bloco 5 concluído** — feature `territory`: CRUD de áreas (bbox), mapa Leaflet/OSM, tabela `territories` (Dexie v3), escopo por `storeId`.
 
 ## Workspace
 
@@ -11,8 +11,8 @@
 
 ## Próximos passos
 
-1. **Bloco 5** — feature `territory`.
-2. Blocos 6–9: crm → visits → partnerships → analytics + PWA.
+1. **Bloco 6** — feature `crm`.
+2. Blocos 7–9: visits → partnerships → analytics + PWA.
 
 ## Decisões
 

@@ -2,9 +2,11 @@ import Dexie, { type Table } from 'dexie';
 import {
   DB_SCHEMA_V1,
   DB_SCHEMA_V2,
+  DB_SCHEMA_V3,
   DB_VERSION,
   type CompanyRecord,
   type StoreRecord,
+  type TerritoryRecord,
 } from '@/core/db/schema';
 
 export function nowIso(): string {
@@ -14,11 +16,12 @@ export function nowIso(): string {
 export class GeoGrowthDB extends Dexie {
   stores!: Table<StoreRecord, string>;
   companies!: Table<CompanyRecord, string>;
+  territories!: Table<TerritoryRecord, string>;
 
   constructor() {
     super('GeoGrowthDB');
     this.version(1).stores(DB_SCHEMA_V1);
-    this.version(DB_VERSION)
+    this.version(2)
       .stores(DB_SCHEMA_V2)
       .upgrade(async (tx) => {
         const table = tx.table<CompanyRecord, string>('companies');
@@ -32,6 +35,7 @@ export class GeoGrowthDB extends Dexie {
           ),
         );
       });
+    this.version(DB_VERSION).stores(DB_SCHEMA_V3);
   }
 }
 

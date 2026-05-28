@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-**Bloco 3 concluído** — feature `store` (referência): repository → service → Zustand → `StoreHomePage` + `StoreForm`. Loja ativa com `storeId`/`tenantId` no slice global. Push em `origin/main`.
+**Bloco 4 concluído** — feature `companies`: CRUD local, filtros (nome, status, tag), listagem por `storeId` da loja ativa. Dexie v2 com índice `status` em `companies`.
 
 ## Workspace
 
@@ -11,8 +11,8 @@
 
 ## Próximos passos
 
-1. **Bloco 4** — feature `companies`.
-2. Blocos 5–9: territory → crm → visits → partnerships → analytics + PWA.
+1. **Bloco 5** — feature `territory`.
+2. Blocos 6–9: crm → visits → partnerships → analytics + PWA.
 
 ## Decisões
 

@@ -6,6 +6,9 @@ import type { VisitsFilterStatus } from '@/features/visits/types/visit';
 import { VISIT_STATUSES, VISIT_STATUS_LABELS } from '@/features/visits/types/visit';
 import '@/features/visits/components/visits.css';
 import { useStoreStore } from '@/features/store/store/store.store';
+import { FeatureAlert } from '@/shared/components/FeatureAlert';
+import { FeatureEmptyState } from '@/shared/components/FeatureEmptyState';
+import { FeatureToolbar } from '@/shared/components/FeatureToolbar';
 
 export function VisitsPage() {
   const activeStore = useStoreStore((s) => s.activeStore);
@@ -39,28 +42,24 @@ export function VisitsPage() {
 
   return (
     <section className="feature-page">
-      <div className="visits-toolbar">
-        <div>
-          <h1>Visitas</h1>
-          <p>Agende e registre visitas de campo por empresa (ordenadas por data).</p>
-        </div>
-        {activeStore && !showForm && companies.length > 0 ? (
-          <button type="button" className="visits-btn visits-btn--primary" onClick={startCreate}>
-            Nova visita
-          </button>
-        ) : null}
-      </div>
+      <FeatureToolbar
+        title="Visitas"
+        description="Agende e registre visitas de campo por empresa (ordenadas por data)."
+        actions={
+          activeStore && !showForm && companies.length > 0 ? (
+            <button type="button" className="visits-btn visits-btn--primary" onClick={startCreate}>
+              Nova visita
+            </button>
+          ) : null
+        }
+      />
 
-      {error ? (
-        <p className="visits-alert" role="alert">
-          {error}
-        </p>
-      ) : null}
+      {error ? <FeatureAlert message={error} /> : null}
 
       {!activeStore ? (
-        <p className="visits-empty">
+        <FeatureEmptyState>
           Cadastre uma loja em <strong>Loja</strong> para gerenciar visitas.
-        </p>
+        </FeatureEmptyState>
       ) : (
         <>
           {showForm ? (

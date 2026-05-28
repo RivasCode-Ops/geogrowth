@@ -34,8 +34,6 @@ export async function buildBackupPayload(): Promise<BackupPayload> {
   };
 }
 
-// TODO(pós-MVP): importBackup() para restaurar JSON exportado com validação de versão.
-
 export async function exportBackup(): Promise<void> {
   const payload = await buildBackupPayload();
   const json = JSON.stringify(payload, null, 2);

@@ -28,7 +28,7 @@ npm run preview     # preview do build
 ## PWA e backup
 
 - Após `npm run build`, o service worker é gerado em `dist/` (Workbox).
-- **Backup JSON**: botão em **Loja** exporta todas as tabelas IndexedDB.
+- **Backup JSON**: em **Loja**, exporte ou importe todas as tabelas IndexedDB (import substitui dados locais).
 - Ícones PWA placeholder em `public/icons/` (substitua em produção).
 
 ## Estrutura

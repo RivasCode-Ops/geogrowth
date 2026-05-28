@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { StoreForm } from '@/features/store/components/StoreForm';
 import { useStoreStore } from '@/features/store/store/store.store';
-import { BackupButton } from '@/shared/components/BackupButton';
+import { BackupPanel } from '@/shared/components/BackupPanel';
 import { FeatureAlert } from '@/shared/components/FeatureAlert';
 import '@/shared/components/feature-ui.css';
 
@@ -49,7 +49,7 @@ export function StoreHomePage() {
 
           <hr className="feature-section-divider" />
           <h2 className="feature-section-title">Backup local</h2>
-          <BackupButton />
+          <BackupPanel />
         </>
       )}
     </section>

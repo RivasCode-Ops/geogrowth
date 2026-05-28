@@ -9,6 +9,9 @@ import {
 } from '@/features/partnerships/types/partnership';
 import '@/features/partnerships/components/partnerships.css';
 import { useStoreStore } from '@/features/store/store/store.store';
+import { FeatureAlert } from '@/shared/components/FeatureAlert';
+import { FeatureEmptyState } from '@/shared/components/FeatureEmptyState';
+import { FeatureToolbar } from '@/shared/components/FeatureToolbar';
 
 export function PartnershipsPage() {
   const activeStore = useStoreStore((s) => s.activeStore);
@@ -42,32 +45,28 @@ export function PartnershipsPage() {
 
   return (
     <section className="feature-page">
-      <div className="partnerships-toolbar">
-        <div>
-          <h1>Parcerias</h1>
-          <p>Gerencie parcerias da loja ativa (empresa vinculada opcional).</p>
-        </div>
-        {activeStore && !showForm ? (
-          <button
-            type="button"
-            className="partnerships-btn partnerships-btn--primary"
-            onClick={startCreate}
-          >
-            Nova parceria
-          </button>
-        ) : null}
-      </div>
+      <FeatureToolbar
+        title="Parcerias"
+        description="Gerencie parcerias da loja ativa (empresa vinculada opcional)."
+        actions={
+          activeStore && !showForm ? (
+            <button
+              type="button"
+              className="partnerships-btn partnerships-btn--primary"
+              onClick={startCreate}
+            >
+              Nova parceria
+            </button>
+          ) : null
+        }
+      />
 
-      {error ? (
-        <p className="partnerships-alert" role="alert">
-          {error}
-        </p>
-      ) : null}
+      {error ? <FeatureAlert message={error} /> : null}
 
       {!activeStore ? (
-        <p className="partnerships-empty">
+        <FeatureEmptyState>
           Cadastre uma loja em <strong>Loja</strong> para gerenciar parcerias.
-        </p>
+        </FeatureEmptyState>
       ) : (
         <>
           {showForm ? (

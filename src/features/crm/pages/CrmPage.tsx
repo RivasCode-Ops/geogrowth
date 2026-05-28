@@ -6,6 +6,9 @@ import type { DealsFilterStage } from '@/features/crm/types/deal';
 import { DEAL_STAGES, DEAL_STAGE_LABELS } from '@/features/crm/types/stage';
 import '@/features/crm/components/crm.css';
 import { useStoreStore } from '@/features/store/store/store.store';
+import { FeatureAlert } from '@/shared/components/FeatureAlert';
+import { FeatureEmptyState } from '@/shared/components/FeatureEmptyState';
+import { FeatureToolbar } from '@/shared/components/FeatureToolbar';
 
 export function CrmPage() {
   const activeStore = useStoreStore((s) => s.activeStore);
@@ -37,28 +40,24 @@ export function CrmPage() {
 
   return (
     <section className="feature-page">
-      <div className="crm-toolbar">
-        <div>
-          <h1>CRM</h1>
-          <p>Oportunidades vinculadas a empresas da loja ativa.</p>
-        </div>
-        {activeStore && !showForm && companies.length > 0 ? (
-          <button type="button" className="crm-btn crm-btn--primary" onClick={startCreate}>
-            Nova oportunidade
-          </button>
-        ) : null}
-      </div>
+      <FeatureToolbar
+        title="CRM"
+        description="Oportunidades vinculadas a empresas da loja ativa."
+        actions={
+          activeStore && !showForm && companies.length > 0 ? (
+            <button type="button" className="crm-btn crm-btn--primary" onClick={startCreate}>
+              Nova oportunidade
+            </button>
+          ) : null
+        }
+      />
 
-      {error ? (
-        <p className="crm-alert" role="alert">
-          {error}
-        </p>
-      ) : null}
+      {error ? <FeatureAlert message={error} /> : null}
 
       {!activeStore ? (
-        <p className="crm-empty">
+        <FeatureEmptyState>
           Cadastre uma loja em <strong>Loja</strong> para usar o CRM.
-        </p>
+        </FeatureEmptyState>
       ) : (
         <>
           {showForm ? (

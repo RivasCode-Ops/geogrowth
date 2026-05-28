@@ -4,6 +4,9 @@ import { TerritoryMap } from '@/features/territory/components/TerritoryMap';
 import { useTerritoryStore } from '@/features/territory/store/territory.store';
 import '@/features/territory/components/territory.css';
 import { useStoreStore } from '@/features/store/store/store.store';
+import { FeatureAlert } from '@/shared/components/FeatureAlert';
+import { FeatureEmptyState } from '@/shared/components/FeatureEmptyState';
+import { FeatureToolbar } from '@/shared/components/FeatureToolbar';
 
 export function TerritoryPage() {
   const activeStore = useStoreStore((s) => s.activeStore);
@@ -36,28 +39,28 @@ export function TerritoryPage() {
 
   return (
     <section className="feature-page">
-      <div className="territory-toolbar">
-        <div>
-          <h1>Território</h1>
-          <p>Áreas de atuação da loja ativa — retângulos (bbox) no mapa.</p>
-        </div>
-        {activeStore && !showForm ? (
-          <button type="button" className="territory-btn territory-btn--primary" onClick={startCreate}>
-            Nova área
-          </button>
-        ) : null}
-      </div>
+      <FeatureToolbar
+        title="Território"
+        description="Áreas de atuação da loja ativa — retângulos (bbox) no mapa."
+        actions={
+          activeStore && !showForm ? (
+            <button
+              type="button"
+              className="territory-btn territory-btn--primary"
+              onClick={startCreate}
+            >
+              Nova área
+            </button>
+          ) : null
+        }
+      />
 
-      {error ? (
-        <p className="territory-alert" role="alert">
-          {error}
-        </p>
-      ) : null}
+      {error ? <FeatureAlert message={error} /> : null}
 
       {!activeStore ? (
-        <p className="territory-empty">
+        <FeatureEmptyState>
           Cadastre uma loja em <strong>Loja</strong> para gerenciar territórios.
-        </p>
+        </FeatureEmptyState>
       ) : (
         <div className="territory-layout">
           <div className="territory-panel">

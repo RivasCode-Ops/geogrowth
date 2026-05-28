@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-**Bloco 1 concluído** — Vite + React + TS, alias `@/`, pastas feature-based, dependências Zustand e Dexie instaladas. App placeholder em `src/app/App.tsx`.
+**Bloco 2 concluído** — AppShell + React Router (7 rotas placeholder), tema (`tokens.css`), Dexie v1 (`stores`, `companies`) e `BaseEntity`. UI não importa `db` diretamente.
 
 ## Workspace
 
@@ -11,9 +11,8 @@
 
 ## Próximos passos
 
-1. **Bloco 2** — `02-layout-rotas.md` e/ou `02-banco-contratos.md`: AppShell, React Router, Dexie schema, `base.entity.ts`.
-2. **Bloco 3** — feature `store` (referência para as demais).
-3. Blocos 4–9: companies → territory → crm → visits → partnerships → analytics + PWA.
+1. **Bloco 3** — feature `store` (CRUD loja, referência para demais features).
+2. Blocos 4–9: companies → territory → crm → visits → partnerships → analytics + PWA.
 
 ## Decisões
 

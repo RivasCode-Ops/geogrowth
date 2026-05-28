@@ -6,10 +6,10 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans, system-ui, sans-serif);
   line-height: 1.5;
-  color: #0f172a;
-  background: #f8fafc;
+  color: var(--color-text, #0f172a);
+  background: var(--color-bg, #f8fafc);
 }
 
 #root {

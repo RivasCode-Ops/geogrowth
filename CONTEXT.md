@@ -2,7 +2,7 @@
 
 ## Estado atual
 
-**Bloco 6 concluído** — feature `crm`: CRUD de oportunidades (`deals`) por `companyId` + `storeId`, estágios lead/negociação/ganho/perdido, board Kanban. Dexie v4.
+**Bloco 7 concluído** — feature `visits`: CRUD de visitas por empresa, status planned/done/cancelled, ordenação por `scheduledAt`. Dexie v5.
 
 ## Workspace
 
@@ -11,8 +11,8 @@
 
 ## Próximos passos
 
-1. **Bloco 7** — feature `visits`.
-2. Blocos 8–9: partnerships → analytics + PWA.
+1. **Bloco 8** — feature `partnerships`.
+2. **Bloco 9** — analytics + PWA.
 
 ## Decisões
 

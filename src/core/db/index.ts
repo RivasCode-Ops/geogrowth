@@ -4,6 +4,7 @@ export {
   DB_SCHEMA_V2,
   DB_SCHEMA_V3,
   DB_SCHEMA_V4,
+  DB_SCHEMA_V5,
   DB_VERSION,
   type CompanyRecord,
   type CompanyStatus,
@@ -12,4 +13,6 @@ export {
   type StoreRecord,
   type TerritoryBounds,
   type TerritoryRecord,
+  type VisitRecord,
+  type VisitStatus,
 } from '@/core/db/schema';

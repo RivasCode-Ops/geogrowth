@@ -4,11 +4,13 @@ import {
   DB_SCHEMA_V2,
   DB_SCHEMA_V3,
   DB_SCHEMA_V4,
+  DB_SCHEMA_V5,
   DB_VERSION,
   type CompanyRecord,
   type DealRecord,
   type StoreRecord,
   type TerritoryRecord,
+  type VisitRecord,
 } from '@/core/db/schema';
 
 export function nowIso(): string {
@@ -20,6 +22,7 @@ export class GeoGrowthDB extends Dexie {
   companies!: Table<CompanyRecord, string>;
   territories!: Table<TerritoryRecord, string>;
   deals!: Table<DealRecord, string>;
+  visits!: Table<VisitRecord, string>;
 
   constructor() {
     super('GeoGrowthDB');
@@ -39,7 +42,8 @@ export class GeoGrowthDB extends Dexie {
         );
       });
     this.version(3).stores(DB_SCHEMA_V3);
-    this.version(DB_VERSION).stores(DB_SCHEMA_V4);
+    this.version(4).stores(DB_SCHEMA_V4);
+    this.version(DB_VERSION).stores(DB_SCHEMA_V5);
   }
 }
 

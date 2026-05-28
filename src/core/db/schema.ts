@@ -1,7 +1,7 @@
 import type { BaseEntity } from '@/core/types/base.entity';
 
 /** Versão atual do IndexedDB — incrementar ao alterar stores(). */
-export const DB_VERSION = 4;
+export const DB_VERSION = 5;
 
 export interface StoreRecord extends BaseEntity {
   name: string;
@@ -65,4 +65,19 @@ export interface DealRecord extends BaseEntity {
 export const DB_SCHEMA_V4 = {
   ...DB_SCHEMA_V3,
   deals: 'id, storeId, companyId, stage, tenantId, updatedAt, syncStatus',
+} as const;
+
+export type VisitStatus = 'planned' | 'done' | 'cancelled';
+
+export interface VisitRecord extends BaseEntity {
+  companyId: string;
+  scheduledAt: string;
+  status: VisitStatus;
+  notes: string;
+}
+
+/** v5: visits (campo) com índice scheduledAt. */
+export const DB_SCHEMA_V5 = {
+  ...DB_SCHEMA_V4,
+  visits: 'id, storeId, companyId, scheduledAt, status, tenantId, updatedAt, syncStatus',
 } as const;

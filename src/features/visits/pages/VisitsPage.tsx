@@ -1,8 +1,109 @@
+import { useEffect } from 'react';
+import { VisitForm } from '@/features/visits/components/VisitForm';
+import { VisitsTable } from '@/features/visits/components/VisitsTable';
+import { useVisitsStore } from '@/features/visits/store/visits.store';
+import type { VisitsFilterStatus } from '@/features/visits/types/visit';
+import { VISIT_STATUSES, VISIT_STATUS_LABELS } from '@/features/visits/types/visit';
+import '@/features/visits/components/visits.css';
+import { useStoreStore } from '@/features/store/store/store.store';
+
 export function VisitsPage() {
+  const activeStore = useStoreStore((s) => s.activeStore);
+  const visits = useVisitsStore((s) => s.visits);
+  const companies = useVisitsStore((s) => s.companies);
+  const statusFilter = useVisitsStore((s) => s.statusFilter);
+  const editingId = useVisitsStore((s) => s.editingId);
+  const isLoading = useVisitsStore((s) => s.isLoading);
+  const isSaving = useVisitsStore((s) => s.isSaving);
+  const error = useVisitsStore((s) => s.error);
+  const loadVisits = useVisitsStore((s) => s.loadVisits);
+  const setStatusFilter = useVisitsStore((s) => s.setStatusFilter);
+  const startCreate = useVisitsStore((s) => s.startCreate);
+  const startEdit = useVisitsStore((s) => s.startEdit);
+  const cancelEdit = useVisitsStore((s) => s.cancelEdit);
+  const saveVisit = useVisitsStore((s) => s.saveVisit);
+  const deleteVisit = useVisitsStore((s) => s.deleteVisit);
+
+  useEffect(() => {
+    if (activeStore) {
+      void loadVisits();
+    }
+  }, [activeStore, loadVisits]);
+
+  const editingVisit =
+    editingId && editingId !== 'new'
+      ? (visits.find((v) => v.id === editingId) ?? null)
+      : null;
+
+  const showForm = editingId !== null;
+
   return (
     <section className="feature-page">
-      <h1>Visitas</h1>
-      <p>Em breve.</p>
+      <div className="visits-toolbar">
+        <div>
+          <h1>Visitas</h1>
+          <p>Agende e registre visitas de campo por empresa (ordenadas por data).</p>
+        </div>
+        {activeStore && !showForm && companies.length > 0 ? (
+          <button type="button" className="visits-btn visits-btn--primary" onClick={startCreate}>
+            Nova visita
+          </button>
+        ) : null}
+      </div>
+
+      {error ? (
+        <p className="visits-alert" role="alert">
+          {error}
+        </p>
+      ) : null}
+
+      {!activeStore ? (
+        <p className="visits-empty">
+          Cadastre uma loja em <strong>Loja</strong> para gerenciar visitas.
+        </p>
+      ) : (
+        <>
+          {showForm ? (
+            <VisitForm
+              visit={editingId === 'new' ? null : editingVisit}
+              companies={companies}
+              isSaving={isSaving}
+              onSubmit={saveVisit}
+              onCancel={cancelEdit}
+              onDelete={(id) => void deleteVisit(id)}
+            />
+          ) : (
+            <div className="visits-filter">
+              <label className="visits-filter__label" htmlFor="visits-status-filter">
+                Status
+              </label>
+              <select
+                id="visits-status-filter"
+                className="visits-select"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value as VisitsFilterStatus)}
+              >
+                <option value="all">Todos</option>
+                {VISIT_STATUSES.map((status) => (
+                  <option key={status} value={status}>
+                    {VISIT_STATUS_LABELS[status]}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {isLoading ? (
+            <p>Carregando…</p>
+          ) : companies.length === 0 ? (
+            <p className="visits-empty">
+              Cadastre empresas em <strong>Empresas</strong> para agendar visitas.
+            </p>
+          ) : showForm ? null : (
+            <VisitsTable visits={visits} onEdit={startEdit} />
+          )}
+        </>
+      )}
     </section>
   );
 }

@@ -22,8 +22,11 @@ Abra **http://127.0.0.1:5190** (porta fixa do GeoGrowth — evita conflito com o
 ```bash
 npm run typecheck   # verificação de tipos
 npm run build       # build de produção
-npm run preview     # preview do build
+npm run preview     # preview do build (só neste PC)
+npm run preview:lan # preview acessível no celular (mesma Wi-Fi)
 ```
+
+**Celular (PWA):** rode `npm run build` e depois `npm run preview:lan`. No telefone, abra `http://<IP-do-PC>:5191` (ex.: `http://192.168.0.109:5191`). O Vite mostra o IP em `Network:` no terminal.
 
 ## PWA e backup
 

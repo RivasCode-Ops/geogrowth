@@ -80,7 +80,7 @@ export const companiesService = {
       storeId,
       tenantId,
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await companiesRepository.create(company);
     return company;
@@ -110,7 +110,7 @@ export const companiesService = {
       status: input.status,
       tag: input.tag.trim(),
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await companiesRepository.update(updated);
     return updated;

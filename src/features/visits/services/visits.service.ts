@@ -102,7 +102,7 @@ export const visitsService = {
       storeId,
       tenantId,
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await visitsRepository.create(visit);
     return { ...visit, companyName };
@@ -130,7 +130,7 @@ export const visitsService = {
       status: input.status,
       notes: input.notes.trim(),
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await visitsRepository.update(updated);
     return { ...updated, companyName };

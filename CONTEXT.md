@@ -2,23 +2,29 @@
 
 ## Estado atual
 
-**MVP local completo** (blocos 1–10) + design system SaaS + PWA (ícones, teste no celular via `preview:lan`) + CI/Pages configurados.
+**MVP local** (blocos 1–10) + design system + PWA/Pages + **Sync Fase 1** (push HTTP via `VITE_SYNC_PUSH_URL`).
 
 ## Workspace
 
 - App: `c:\_PROJETOS\geogrowth`
-- Método / prompts: `c:\_PROJETOS\workbench\GeoGrowth-Cursor\`
-- Público (após deploy): https://rivascode-ops.github.io/geogrowth/
+- Método: `c:\_PROJETOS\workbench\GeoGrowth-Cursor\`
+- Público: https://rivascode-ops.github.io/geogrowth/
+- Sync: [docs/SYNC.md](./docs/SYNC.md)
 
-## Próximos passos (pós-MVP)
+## Sync (Fase 1)
 
-1. Ativar **GitHub Pages** no repositório (Source: GitHub Actions) e validar URL pública + PWA instalável.
-2. Passar [TESTE-MANUAL.md](./TESTE-MANUAL.md) completo e marcar checklist.
-3. Sync cloud / backend (fora do escopo atual — nova fase de produto).
+- Salvamentos marcam `syncStatus: 'pending'`.
+- Topbar: contagem + botão **Sincronizar** (POST JSON pendências).
+- Sem URL → mensagem para configurar `.env`.
+- Pull/merge/auth: **não implementado**.
+
+## Próximos passos
+
+1. Implementar endpoint de push (ou Supabase) e testar sync real.
+2. Fase 2: pull + conflitos + auth.
+3. [TESTE-MANUAL.md](./TESTE-MANUAL.md) + checklist sync.
 
 ## Decisões
 
-- Arquitetura feature-based; UI não acessa Dexie (apenas `repository` / `core/backup`).
-- `analytics` agrega via repositories (leitura cross-feature documentada).
-- Org GitHub: `RivasCode-Ops`.
-- Dev local: **http://127.0.0.1:5190** | Preview LAN: **npm run preview:lan**
+- UI não acessa Dexie; sync via `core/sync` + `sync.store`.
+- Dev: http://127.0.0.1:5190 | LAN: `npm run preview:lan`

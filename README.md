@@ -54,6 +54,16 @@ Abra http://127.0.0.1:5191/geogrowth/
 
 Design system em `src/shared/styles/design-system.css` e tokens em `src/core/theme/tokens.css`. Paleta grafite + teal, cards e formulários unificados em todas as rotas.
 
+## Sync em nuvem (Fase 1)
+
+```bash
+cp .env.example .env
+# VITE_SYNC_PUSH_URL=https://sua-api/sync/push
+npm run dev
+```
+
+Documentação: [docs/SYNC.md](./docs/SYNC.md). Botão **Sincronizar** na barra superior envia pendências (`local` / `pending` / `error`) por POST JSON.
+
 ## Estrutura
 
 ```text

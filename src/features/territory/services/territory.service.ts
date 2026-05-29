@@ -66,7 +66,7 @@ export const territoryService = {
       storeId,
       tenantId,
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await territoryRepository.create(territory);
     return territory;
@@ -90,7 +90,7 @@ export const territoryService = {
       bounds: validateBounds(input.bounds),
       color: input.color,
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await territoryRepository.update(updated);
     return updated;

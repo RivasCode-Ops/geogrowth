@@ -40,7 +40,7 @@ export const storeService = {
         tenantId,
         storeId,
         updatedAt,
-        syncStatus: 'local',
+        syncStatus: 'pending',
       };
       await storeRepository.update(updated);
       return updated;
@@ -52,7 +52,7 @@ export const storeService = {
       tenantId,
       storeId,
       updatedAt,
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await storeRepository.create(created);
     return created;

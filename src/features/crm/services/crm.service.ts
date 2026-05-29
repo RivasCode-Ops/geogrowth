@@ -100,7 +100,7 @@ export const crmService = {
       storeId,
       tenantId,
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await crmRepository.create(deal);
     return { ...deal, companyName };
@@ -130,7 +130,7 @@ export const crmService = {
       value: Math.max(0, input.value),
       notes: input.notes.trim(),
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await crmRepository.update(updated);
     return { ...updated, companyName };

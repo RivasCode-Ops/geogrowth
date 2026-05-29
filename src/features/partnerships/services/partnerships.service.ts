@@ -130,7 +130,7 @@ export const partnershipsService = {
       storeId,
       tenantId,
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await partnershipsRepository.create(partnership);
     return enrichPartnership(partnership);
@@ -163,7 +163,7 @@ export const partnershipsService = {
       validTo: vigencia.validTo,
       companyId,
       updatedAt: nowIso(),
-      syncStatus: 'local',
+      syncStatus: 'pending',
     };
     await partnershipsRepository.update(updated);
     return enrichPartnership(updated);

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { notifyDataChanged } from '@/core/sync/notify-data-changed';
 import type { Company } from '@/features/companies/types/company';
 import {
   partnershipsService,
@@ -97,6 +98,7 @@ export const usePartnershipsStore = create<PartnershipsSlice>((set, get) => ({
       }
       set({ editingId: null, isSaving: false });
       await get().loadPartnerships();
+      notifyDataChanged();
     } catch (error) {
       set({ isSaving: false, error: mapFeatureError(error, knownErrors) });
     }
@@ -115,6 +117,7 @@ export const usePartnershipsStore = create<PartnershipsSlice>((set, get) => ({
         set({ editingId: null });
       }
       await get().loadPartnerships();
+      notifyDataChanged();
     } catch (error) {
       set({ error: mapFeatureError(error, knownErrors) });
     }

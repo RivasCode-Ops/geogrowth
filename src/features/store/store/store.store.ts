@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { notifyDataChanged } from '@/core/sync/notify-data-changed';
 import { storeService, StoreValidationError } from '@/features/store/services/store.service';
 import type { SaveStoreInput, Store } from '@/features/store/types/store';
 
@@ -42,6 +43,7 @@ export const useStoreStore = create<StoreSlice>((set) => ({
     try {
       const activeStore = await storeService.saveStore(input);
       set({ activeStore, isSaving: false });
+      notifyDataChanged();
     } catch (error) {
       const message =
         error instanceof StoreValidationError

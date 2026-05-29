@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { notifyDataChanged } from '@/core/sync/notify-data-changed';
 import {
   territoryService,
   TerritoryStoreRequiredError,
@@ -83,6 +84,7 @@ export const useTerritoryStore = create<TerritorySlice>((set, get) => ({
       }
       set({ editingId: null, isSaving: false });
       await get().loadTerritories();
+      notifyDataChanged();
     } catch (error) {
       set({ isSaving: false, error: mapFeatureError(error, knownErrors) });
     }
@@ -102,6 +104,7 @@ export const useTerritoryStore = create<TerritorySlice>((set, get) => ({
       const nextEditing = state.editingId === id ? null : state.editingId;
       set({ selectedId: nextSelected, editingId: nextEditing });
       await get().loadTerritories();
+      notifyDataChanged();
     } catch (error) {
       set({ error: mapFeatureError(error, knownErrors) });
     }

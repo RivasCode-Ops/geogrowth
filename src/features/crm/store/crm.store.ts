@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { notifyDataChanged } from '@/core/sync/notify-data-changed';
 import type { Company } from '@/features/companies/types/company';
 import {
   crmService,
@@ -93,6 +94,7 @@ export const useCrmStore = create<CrmSlice>((set, get) => ({
       }
       set({ editingId: null, isSaving: false });
       await get().loadDeals();
+      notifyDataChanged();
     } catch (error) {
       set({ isSaving: false, error: mapFeatureError(error, knownErrors) });
     }
@@ -111,6 +113,7 @@ export const useCrmStore = create<CrmSlice>((set, get) => ({
         set({ editingId: null });
       }
       await get().loadDeals();
+      notifyDataChanged();
     } catch (error) {
       set({ error: mapFeatureError(error, knownErrors) });
     }

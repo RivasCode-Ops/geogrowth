@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { notifyDataChanged } from '@/core/sync/notify-data-changed';
 import {
   companiesService,
   CompanyStoreRequiredError,
@@ -88,6 +89,7 @@ export const useCompaniesStore = create<CompaniesSlice>((set, get) => ({
       }
       set({ editingId: null, isSaving: false });
       await get().loadCompanies();
+      notifyDataChanged();
     } catch (error) {
       set({ isSaving: false, error: mapFeatureError(error, knownErrors) });
     }
@@ -107,6 +109,7 @@ export const useCompaniesStore = create<CompaniesSlice>((set, get) => ({
         set({ editingId: null });
       }
       await get().loadCompanies();
+      notifyDataChanged();
     } catch (error) {
       set({ error: mapFeatureError(error, knownErrors) });
     }

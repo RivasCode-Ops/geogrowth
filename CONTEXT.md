@@ -18,8 +18,8 @@
 
 ## Próximos passos (pós-MVP)
 
-1. Substituir `public/icons/icon-192.png` e `icon-512.png` por ícones finais de marca.
-2. Teste instalação PWA em dispositivo (`npm run build` + preview ou deploy estático).
+1. Teste instalação PWA em dispositivo (`npm run preview` em http://127.0.0.1:5191 ou deploy estático).
+2. Opcional: gerar `icon-192.png` redimensionado (hoje 192 reutiliza o asset 512).
 3. Sync cloud / backend (fora do escopo atual).
 
 ## Decisões

@@ -5,7 +5,8 @@ import type { SyncAdapter } from '@/core/sync/types';
 export function createSyncAdapter(): SyncAdapter {
   const url = import.meta.env.VITE_SYNC_PUSH_URL?.trim();
   if (url) {
-    return new HttpJsonSyncAdapter(url);
+    const apiKey = import.meta.env.VITE_SYNC_API_KEY?.trim();
+    return new HttpJsonSyncAdapter(url, apiKey);
   }
   return new NoopSyncAdapter();
 }

@@ -24,10 +24,18 @@ Mesma estrutura do backup (`app`, `dbVersion`, `exportedAt`, `data`), mais:
 ```bash
 cp .env.example .env
 # Edite VITE_SYNC_PUSH_URL=https://...
+# Se a API exige chave: VITE_SYNC_API_KEY=mesmo-valor-de-SYNC_API_KEY
 npm run dev
 ```
 
+| Variável | Obrigatória | Descrição |
+|----------|-------------|-----------|
+| `VITE_SYNC_PUSH_URL` | Sim (para sync) | URL do `POST` push |
+| `VITE_SYNC_API_KEY` | Não | Enviada no header `X-API-Key` quando definida |
+
 Sem URL: o botão **Sincronizar** informa que o endpoint não está configurado.
+
+> **Nota:** em PWA o valor de `VITE_*` fica no bundle do cliente. Use chave só para ambiente controlado ou troque por proxy/backend na Fase 2.
 
 ## Contrato mínimo do servidor (Fase 1)
 
@@ -36,14 +44,26 @@ Sem URL: o botão **Sincronizar** informa que o endpoint não está configurado.
 - Resposta: `2xx` para aceitar o lote
 - Corpo: persistir JSON como snapshot ou ingerir por tabela (implementação sua)
 
-Exemplo Node/Express (referência):
+## API oficial (repo irmão)
 
-```js
-app.post('/api/geogrowth/sync/push', express.json({ limit: '2mb' }), (req, res) => {
-  // validar req.body.app === 'geogrowth'
-  res.status(200).json({ ok: true });
-});
+Implementação pronta: **`geogrowth-sync-api`** (`c:\_PROJETOS\geogrowth-sync-api`).
+
+```powershell
+cd c:\_PROJETOS\geogrowth-sync-api
+npm install
+copy .env.example .env
+npm run dev
 ```
+
+No app:
+
+```env
+VITE_SYNC_PUSH_URL=http://127.0.0.1:8787/api/geogrowth/sync/push
+# Se SYNC_API_KEY estiver definida na API:
+# VITE_SYNC_API_KEY=sua-chave-dev
+```
+
+Snapshots em `data/snapshots/{tenantId}/{storeId}/`. Ver README da API.
 
 ## Próximas fases (não implementadas)
 

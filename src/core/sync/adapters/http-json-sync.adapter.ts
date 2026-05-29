@@ -5,17 +5,29 @@ import { nowIso } from '@/core/utils/timestamps';
 export class HttpJsonSyncAdapter implements SyncAdapter {
   readonly name = 'http-json';
 
-  constructor(private readonly pushUrl: string) {}
+  constructor(
+    private readonly pushUrl: string,
+    private readonly apiKey?: string,
+  ) {}
+
+  private buildHeaders(): HeadersInit {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    };
+    const key = this.apiKey?.trim();
+    if (key) {
+      headers['X-API-Key'] = key;
+    }
+    return headers;
+  }
 
   async push(payload: SyncPushPayload): Promise<SyncPushResult> {
     let response: Response;
     try {
       response = await fetch(this.pushUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+        headers: this.buildHeaders(),
         body: JSON.stringify(payload),
       });
     } catch {

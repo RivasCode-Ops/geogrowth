@@ -18,9 +18,15 @@
 - Sem URL → mensagem para configurar `.env`.
 - Pull/merge/auth: **não implementado**.
 
+## API de sync (Fase 1)
+
+- Repo: `c:\_PROJETOS\geogrowth-sync-api` — `POST /api/geogrowth/sync/push`
+- Local: `VITE_SYNC_PUSH_URL=http://127.0.0.1:8787/api/geogrowth/sync/push`
+
 ## Próximos passos
 
-1. Implementar endpoint de push (ou Supabase) e testar sync real.
+1. Subir API (`npm run dev` na sync-api) e testar botão **Sincronizar**.
+2. Publicar `geogrowth-sync-api` no GitHub + deploy HTTPS.
 2. Fase 2: pull + conflitos + auth.
 3. [TESTE-MANUAL.md](./TESTE-MANUAL.md) + checklist sync.
 

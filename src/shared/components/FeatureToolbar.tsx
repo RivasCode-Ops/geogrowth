@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import '@/shared/components/feature-ui.css';
+import { PageHeader } from '@/shared/components/PageHeader';
 
 type FeatureToolbarProps = {
   title: string;
@@ -7,14 +7,7 @@ type FeatureToolbarProps = {
   actions?: ReactNode;
 };
 
+/** @deprecated Prefer PageHeader directly; mantido para compatibilidade nas features. */
 export function FeatureToolbar({ title, description, actions }: FeatureToolbarProps) {
-  return (
-    <div className="feature-toolbar">
-      <div>
-        <h1>{title}</h1>
-        {description ? <p>{description}</p> : null}
-      </div>
-      {actions ? <div className="feature-toolbar__actions">{actions}</div> : null}
-    </div>
-  );
+  return <PageHeader title={title} subtitle={description} actions={actions} />;
 }

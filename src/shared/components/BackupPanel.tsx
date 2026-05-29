@@ -67,7 +67,7 @@ export function BackupPanel() {
       <div className="backup-actions__row">
         <button
           type="button"
-          className="store-form__submit"
+          className="btn btn--primary"
           disabled={isExporting || isImporting}
           onClick={() => void handleExport()}
         >
@@ -75,7 +75,7 @@ export function BackupPanel() {
         </button>
         <button
           type="button"
-          className="store-form__submit store-form__submit--secondary"
+          className="btn btn--secondary"
           disabled={isExporting || isImporting}
           onClick={handleImportClick}
         >
@@ -91,11 +91,11 @@ export function BackupPanel() {
       </div>
       {error ? <FeatureAlert message={error} /> : null}
       {success ? (
-        <p className="store-form__hint" style={{ color: 'var(--color-primary)' }}>
+        <p className="field__hint" style={{ color: 'var(--color-primary)' }}>
           {success}
         </p>
       ) : null}
-      <p className="store-form__hint">
+      <p className="field__hint">
         Exporta ou restaura lojas, empresas, territórios, CRM, visitas e parcerias (IndexedDB).
       </p>
     </div>

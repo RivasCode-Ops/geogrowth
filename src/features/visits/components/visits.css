@@ -37,9 +37,9 @@
 
 .visits-table-wrap {
   overflow-x: auto;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
+  margin: calc(-1 * var(--space-lg));
+  margin-top: 0;
+  padding: 0 var(--space-lg) var(--space-lg);
 }
 
 .visits-table {

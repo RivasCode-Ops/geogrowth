@@ -55,7 +55,7 @@ export function AnalyticsPage() {
   }, [activeStore]);
 
   return (
-    <section className="feature-page">
+    <section className="page feature-page">
       <FeatureToolbar
         title="Analytics"
         description="Resumo agregado da loja ativa (somente leitura)."
@@ -68,7 +68,7 @@ export function AnalyticsPage() {
           Cadastre uma loja em <strong>Loja</strong> para ver métricas.
         </FeatureEmptyState>
       ) : isLoading ? (
-        <p>Carregando…</p>
+        <p className="loading-text">Carregando métricas…</p>
       ) : summary ? (
         <SummaryCards summary={summary} />
       ) : null}

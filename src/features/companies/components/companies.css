@@ -5,13 +5,7 @@
 }
 
 .companies-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  padding: var(--space-md);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  gap: var(--space-lg);
 }
 
 .companies-filters__field {
@@ -30,19 +24,29 @@
 
 .companies-input,
 .companies-select {
-  padding: var(--space-sm) var(--space-md);
+  padding: 0.625rem 0.875rem;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   font: inherit;
   background: var(--color-surface);
   color: var(--color-text);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.companies-input:focus,
+.companies-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-muted);
 }
 
 .companies-table-wrap {
   overflow-x: auto;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
+  margin: calc(-1 * var(--space-lg));
+  margin-top: 0;
+  padding: 0 var(--space-lg) var(--space-lg);
 }
 
 .companies-table {
@@ -132,8 +136,9 @@
   max-width: 28rem;
   padding: var(--space-lg);
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
 }
 
 .companies-form__title {

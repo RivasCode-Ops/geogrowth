@@ -2,7 +2,6 @@ import { useEffect, useState, type FormEvent } from 'react';
 import type { Company } from '@/features/companies/types/company';
 import type { SaveVisitInput, VisitWithCompany } from '@/features/visits/types/visit';
 import { VISIT_STATUSES, VISIT_STATUS_LABELS } from '@/features/visits/types/visit';
-import '@/features/visits/components/visits.css';
 
 type VisitFormProps = {
   visit: VisitWithCompany | null;
@@ -78,23 +77,21 @@ export function VisitForm({
 
   if (companies.length === 0) {
     return (
-      <p className="visits-empty">
+      <p className="empty-hint">
         Cadastre empresas em <strong>Empresas</strong> antes de agendar visitas.
       </p>
     );
   }
 
   return (
-    <form className="visits-form" onSubmit={(e) => void handleSubmit(e)}>
-      <h2 className="visits-form__title">{visit ? 'Editar visita' : 'Nova visita'}</h2>
-
-      <div className="visits-form__field">
-        <label className="visits-form__label" htmlFor="visit-company">
+    <form className="form-stack" onSubmit={(e) => void handleSubmit(e)}>
+      <div className="field">
+        <label className="field__label" htmlFor="visit-company">
           Empresa
         </label>
         <select
           id="visit-company"
-          className="visits-select"
+          className="select"
           value={form.companyId}
           onChange={(e) => setForm((prev) => ({ ...prev, companyId: e.target.value }))}
           required
@@ -107,13 +104,13 @@ export function VisitForm({
         </select>
       </div>
 
-      <div className="visits-form__field">
-        <label className="visits-form__label" htmlFor="visit-scheduled">
+      <div className="field">
+        <label className="field__label" htmlFor="visit-scheduled">
           Data e hora
         </label>
         <input
           id="visit-scheduled"
-          className="visits-input"
+          className="input"
           type="datetime-local"
           value={form.scheduledAt}
           onChange={(e) => setForm((prev) => ({ ...prev, scheduledAt: e.target.value }))}
@@ -121,13 +118,13 @@ export function VisitForm({
         />
       </div>
 
-      <div className="visits-form__field">
-        <label className="visits-form__label" htmlFor="visit-status">
+      <div className="field">
+        <label className="field__label" htmlFor="visit-status">
           Status
         </label>
         <select
           id="visit-status"
-          className="visits-select"
+          className="select"
           value={form.status}
           onChange={(e) =>
             setForm((prev) => ({
@@ -144,31 +141,27 @@ export function VisitForm({
         </select>
       </div>
 
-      <div className="visits-form__field">
-        <label className="visits-form__label" htmlFor="visit-notes">
+      <div className="field">
+        <label className="field__label" htmlFor="visit-notes">
           Notas
         </label>
         <textarea
           id="visit-notes"
-          className="visits-textarea"
+          className="textarea"
           value={form.notes}
           onChange={(e) => setForm((prev) => ({ ...prev, notes: e.target.value }))}
         />
       </div>
 
-      <div className="visits-actions">
-        <button className="visits-btn visits-btn--primary" type="submit" disabled={isSaving}>
+      <div className="form-actions">
+        <button className="btn btn--primary" type="submit" disabled={isSaving}>
           {isSaving ? 'Salvando…' : visit ? 'Salvar' : 'Agendar'}
         </button>
-        <button className="visits-btn" type="button" onClick={onCancel}>
+        <button className="btn btn--secondary" type="button" onClick={onCancel}>
           Cancelar
         </button>
         {visit && onDelete ? (
-          <button
-            className="visits-btn visits-btn--danger"
-            type="button"
-            onClick={() => onDelete(visit.id)}
-          >
+          <button className="btn btn--danger" type="button" onClick={() => onDelete(visit.id)}>
             Excluir
           </button>
         ) : null}

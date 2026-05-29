@@ -38,14 +38,14 @@ export function CompaniesTable({ items, onEdit, onDelete }: CompaniesTableProps)
                 <div className="companies-actions">
                   <button
                     type="button"
-                    className="companies-btn"
+                    className="btn btn--sm btn--secondary"
                     onClick={() => onEdit(company.id)}
                   >
                     Editar
                   </button>
                   <button
                     type="button"
-                    className="companies-btn companies-btn--danger"
+                    className="btn btn--sm btn--danger"
                     onClick={() => onDelete(company.id)}
                   >
                     Excluir

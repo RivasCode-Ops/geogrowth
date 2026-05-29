@@ -69,38 +69,34 @@ export function TerritoryForm({ territory, isSaving, onSubmit, onCancel }: Terri
   };
 
   return (
-    <form className="territory-form" onSubmit={(e) => void handleSubmit(e)}>
-      <h2 className="territory-form__title">
-        {territory ? 'Editar área' : 'Nova área de atuação'}
-      </h2>
-
-      <div className="territory-form__field">
-        <label className="territory-form__label" htmlFor="territory-name">
+    <form className="form-stack" onSubmit={(e) => void handleSubmit(e)}>
+      <div className="field">
+        <label className="field__label" htmlFor="territory-name">
           Nome
         </label>
         <input
           id="territory-name"
-          className="territory-input"
+          className="input"
           value={form.name}
           onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
           required
         />
       </div>
 
-      <div className="territory-form__field">
-        <label className="territory-form__label" htmlFor="territory-desc">
+      <div className="field">
+        <label className="field__label" htmlFor="territory-desc">
           Descrição
         </label>
         <textarea
           id="territory-desc"
-          className="territory-textarea"
+          className="textarea"
           value={form.description}
           onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
         />
       </div>
 
-      <div className="territory-form__field">
-        <span className="territory-form__label">Cor no mapa</span>
+      <div className="field">
+        <span className="field__label">Cor no mapa</span>
         <div className="territory-colors">
           {TERRITORY_COLORS.map((color) => (
             <button
@@ -115,58 +111,72 @@ export function TerritoryForm({ territory, isSaving, onSubmit, onCancel }: Terri
         </div>
       </div>
 
-      <fieldset className="territory-form__field">
-        <legend className="territory-form__label">Limites (bbox)</legend>
+      <fieldset className="territory-bounds-field">
+        <legend className="field__label">Limites (bbox)</legend>
         <div className="territory-bounds">
-          <label>
-            Norte (lat)
+          <div className="field">
+            <label className="field__label" htmlFor="bound-north">
+              Norte (lat)
+            </label>
             <input
-              className="territory-input"
+              id="bound-north"
+              className="input"
               type="number"
               step="any"
               value={form.bounds.north}
               onChange={(e) => setBound('north', e.target.value)}
             />
-          </label>
-          <label>
-            Sul (lat)
+          </div>
+          <div className="field">
+            <label className="field__label" htmlFor="bound-south">
+              Sul (lat)
+            </label>
             <input
-              className="territory-input"
+              id="bound-south"
+              className="input"
               type="number"
               step="any"
               value={form.bounds.south}
               onChange={(e) => setBound('south', e.target.value)}
             />
-          </label>
-          <label>
-            Leste (lng)
+          </div>
+          <div className="field">
+            <label className="field__label" htmlFor="bound-east">
+              Leste (lng)
+            </label>
             <input
-              className="territory-input"
+              id="bound-east"
+              className="input"
               type="number"
               step="any"
               value={form.bounds.east}
               onChange={(e) => setBound('east', e.target.value)}
             />
-          </label>
-          <label>
-            Oeste (lng)
+          </div>
+          <div className="field">
+            <label className="field__label" htmlFor="bound-west">
+              Oeste (lng)
+            </label>
             <input
-              className="territory-input"
+              id="bound-west"
+              className="input"
               type="number"
               step="any"
               value={form.bounds.west}
               onChange={(e) => setBound('west', e.target.value)}
             />
-          </label>
+          </div>
         </div>
-        <p className="territory-hint">Retângulo exibido no mapa (offline: tiles OSM quando online).</p>
+        <p className="field__hint">
+          Retângulo exibido no mapa (offline: tiles OSM quando online).
+        </p>
       </fieldset>
 
-      <div className="territory-actions">
-        <button className="territory-btn territory-btn--primary" type="submit" disabled={isSaving}>
+      <div className="form-actions">
+        <button className="btn btn--primary" type="submit" disabled={isSaving}>
           {isSaving ? 'Salvando…' : territory ? 'Salvar' : 'Cadastrar'}
         </button>
-        <button className="territory-btn" type="button" onClick={onCancel}>
+        <button className="btn btn--secondary" type="button" onClick={onCancel}>
           Cancelar
         </button>
       </div>

@@ -46,14 +46,14 @@ export function StoreForm({ store, isSaving, onSubmit }: StoreFormProps) {
   };
 
   return (
-    <form className="store-form" onSubmit={(e) => void handleSubmit(e)}>
-      <div className="store-form__field">
-        <label className="store-form__label" htmlFor="store-name">
+    <form className="form-stack store-form" onSubmit={(e) => void handleSubmit(e)}>
+      <div className="field">
+        <label className="field__label" htmlFor="store-name">
           Nome da loja
         </label>
         <input
           id="store-name"
-          className="store-form__input"
+          className="input"
           value={form.name}
           onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
           placeholder="Ex.: Loja Centro"
@@ -61,39 +61,40 @@ export function StoreForm({ store, isSaving, onSubmit }: StoreFormProps) {
         />
       </div>
 
-      <div className="store-form__field">
-        <label className="store-form__label" htmlFor="store-tenant-id">
+      <div className="field">
+        <label className="field__label" htmlFor="store-tenant-id">
           Tenant ID
         </label>
         <input
           id="store-tenant-id"
-          className="store-form__input"
+          className="input"
           value={form.tenantId}
           onChange={(e) => setForm((prev) => ({ ...prev, tenantId: e.target.value }))}
           placeholder="Identificador do tenant"
           required
         />
+        <p className="field__hint">Agrupa lojas sob o mesmo contrato ou franquia.</p>
       </div>
 
-      <div className="store-form__field">
-        <label className="store-form__label" htmlFor="store-store-id">
+      <div className="field">
+        <label className="field__label" htmlFor="store-store-id">
           Store ID
         </label>
         <input
           id="store-store-id"
-          className="store-form__input"
+          className="input"
           value={form.storeId}
           onChange={(e) => setForm((prev) => ({ ...prev, storeId: e.target.value }))}
           placeholder="Identificador da loja"
           required
         />
-        <p className="store-form__hint">
+        <p className="field__hint">
           Usado pelas demais features para filtrar dados locais.
         </p>
       </div>
 
-      <div className="store-form__actions">
-        <button className="store-form__submit" type="submit" disabled={isSaving}>
+      <div className="form-actions">
+        <button className="btn btn--primary" type="submit" disabled={isSaving}>
           {isSaving ? 'Salvando…' : store ? 'Atualizar loja' : 'Cadastrar loja'}
         </button>
       </div>

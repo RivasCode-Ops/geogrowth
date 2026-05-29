@@ -42,7 +42,11 @@ export function PartnershipsTable({ items, onEdit }: PartnershipsTableProps) {
               </td>
               <td>{item.companyName ?? '—'}</td>
               <td>
-                <button type="button" className="partnerships-btn" onClick={() => onEdit(item.id)}>
+                <button
+                  type="button"
+                  className="btn btn--sm btn--secondary"
+                  onClick={() => onEdit(item.id)}
+                >
                   Editar
                 </button>
               </td>

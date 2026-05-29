@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from '@/app/App';
 import '@/core/theme/tokens.css';
+import '@/shared/styles/design-system.css';
 import '@/index.css';
 import { registerAppServiceWorker } from '@/pwa/registerSW';
 

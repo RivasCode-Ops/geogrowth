@@ -2,7 +2,6 @@ import { useEffect, useState, type FormEvent } from 'react';
 import type { Company } from '@/features/companies/types/company';
 import type { DealWithCompany, SaveDealInput } from '@/features/crm/types/deal';
 import { DEAL_STAGES, DEAL_STAGE_LABELS } from '@/features/crm/types/stage';
-import '@/features/crm/components/crm.css';
 
 type DealFormProps = {
   deal: DealWithCompany | null;
@@ -70,23 +69,21 @@ export function DealForm({
 
   if (companies.length === 0) {
     return (
-      <p className="crm-empty">
+      <p className="empty-hint">
         Cadastre empresas em <strong>Empresas</strong> antes de criar oportunidades.
       </p>
     );
   }
 
   return (
-    <form className="crm-form" onSubmit={(e) => void handleSubmit(e)}>
-      <h2 className="crm-form__title">{deal ? 'Editar oportunidade' : 'Nova oportunidade'}</h2>
-
-      <div className="crm-form__field">
-        <label className="crm-form__label" htmlFor="deal-company">
+    <form className="form-stack" onSubmit={(e) => void handleSubmit(e)}>
+      <div className="field">
+        <label className="field__label" htmlFor="deal-company">
           Empresa
         </label>
         <select
           id="deal-company"
-          className="crm-select"
+          className="select"
           value={form.companyId}
           onChange={(e) => setForm((prev) => ({ ...prev, companyId: e.target.value }))}
           required
@@ -99,26 +96,26 @@ export function DealForm({
         </select>
       </div>
 
-      <div className="crm-form__field">
-        <label className="crm-form__label" htmlFor="deal-title">
+      <div className="field">
+        <label className="field__label" htmlFor="deal-title">
           Título
         </label>
         <input
           id="deal-title"
-          className="crm-input"
+          className="input"
           value={form.title}
           onChange={(e) => setForm((prev) => ({ ...prev, title: e.target.value }))}
           required
         />
       </div>
 
-      <div className="crm-form__field">
-        <label className="crm-form__label" htmlFor="deal-stage">
+      <div className="field">
+        <label className="field__label" htmlFor="deal-stage">
           Estágio
         </label>
         <select
           id="deal-stage"
-          className="crm-select"
+          className="select"
           value={form.stage}
           onChange={(e) =>
             setForm((prev) => ({
@@ -135,13 +132,13 @@ export function DealForm({
         </select>
       </div>
 
-      <div className="crm-form__field">
-        <label className="crm-form__label" htmlFor="deal-value">
+      <div className="field">
+        <label className="field__label" htmlFor="deal-value">
           Valor (R$)
         </label>
         <input
           id="deal-value"
-          className="crm-input"
+          className="input"
           type="number"
           min="0"
           step="0.01"
@@ -150,31 +147,27 @@ export function DealForm({
         />
       </div>
 
-      <div className="crm-form__field">
-        <label className="crm-form__label" htmlFor="deal-notes">
+      <div className="field">
+        <label className="field__label" htmlFor="deal-notes">
           Notas
         </label>
         <textarea
           id="deal-notes"
-          className="crm-textarea"
+          className="textarea"
           value={form.notes}
           onChange={(e) => setForm((prev) => ({ ...prev, notes: e.target.value }))}
         />
       </div>
 
-      <div className="crm-actions">
-        <button className="crm-btn crm-btn--primary" type="submit" disabled={isSaving}>
+      <div className="form-actions">
+        <button className="btn btn--primary" type="submit" disabled={isSaving}>
           {isSaving ? 'Salvando…' : deal ? 'Salvar' : 'Cadastrar'}
         </button>
-        <button className="crm-btn" type="button" onClick={onCancel}>
+        <button className="btn btn--secondary" type="button" onClick={onCancel}>
           Cancelar
         </button>
         {deal && onDelete ? (
-          <button
-            className="crm-btn crm-btn--danger"
-            type="button"
-            onClick={() => onDelete(deal.id)}
-          >
+          <button className="btn btn--danger" type="button" onClick={() => onDelete(deal.id)}>
             Excluir
           </button>
         ) : null}

@@ -85,31 +85,27 @@ export function PartnershipForm({
   };
 
   return (
-    <form className="partnerships-form" onSubmit={(e) => void handleSubmit(e)}>
-      <h2 className="partnerships-form__title">
-        {partnership ? 'Editar parceria' : 'Nova parceria'}
-      </h2>
-
-      <div className="partnerships-form__field">
-        <label className="partnerships-form__label" htmlFor="partner-name">
+    <form className="form-stack" onSubmit={(e) => void handleSubmit(e)}>
+      <div className="field">
+        <label className="field__label" htmlFor="partner-name">
           Nome do parceiro
         </label>
         <input
           id="partner-name"
-          className="partnerships-input"
+          className="input"
           value={form.partnerName}
           onChange={(e) => setForm((prev) => ({ ...prev, partnerName: e.target.value }))}
           required
         />
       </div>
 
-      <div className="partnerships-form__field">
-        <label className="partnerships-form__label" htmlFor="partner-type">
+      <div className="field">
+        <label className="field__label" htmlFor="partner-type">
           Tipo
         </label>
         <select
           id="partner-type"
-          className="partnerships-select"
+          className="select"
           value={form.type}
           onChange={(e) =>
             setForm((prev) => ({
@@ -126,39 +122,45 @@ export function PartnershipForm({
         </select>
       </div>
 
-      <fieldset className="partnerships-form__field">
-        <legend className="partnerships-form__label">Vigência</legend>
+      <fieldset className="partnerships-dates-field">
+        <legend className="field__label">Vigência</legend>
         <div className="partnerships-dates">
-          <label>
-            Início
+          <div className="field">
+            <label className="field__label" htmlFor="partner-from">
+              Início
+            </label>
             <input
-              className="partnerships-input"
+              id="partner-from"
+              className="input"
               type="date"
               value={form.validFrom}
               onChange={(e) => setForm((prev) => ({ ...prev, validFrom: e.target.value }))}
               required
             />
-          </label>
-          <label>
-            Fim
+          </div>
+          <div className="field">
+            <label className="field__label" htmlFor="partner-to">
+              Fim
+            </label>
             <input
-              className="partnerships-input"
+              id="partner-to"
+              className="input"
               type="date"
               value={form.validTo}
               onChange={(e) => setForm((prev) => ({ ...prev, validTo: e.target.value }))}
               required
             />
-          </label>
+          </div>
         </div>
       </fieldset>
 
-      <div className="partnerships-form__field">
-        <label className="partnerships-form__label" htmlFor="partner-company">
+      <div className="field">
+        <label className="field__label" htmlFor="partner-company">
           Empresa (opcional)
         </label>
         <select
           id="partner-company"
-          className="partnerships-select"
+          className="select"
           value={form.companyId}
           onChange={(e) => setForm((prev) => ({ ...prev, companyId: e.target.value }))}
         >
@@ -171,20 +173,16 @@ export function PartnershipForm({
         </select>
       </div>
 
-      <div className="partnerships-actions">
-        <button
-          className="partnerships-btn partnerships-btn--primary"
-          type="submit"
-          disabled={isSaving}
-        >
+      <div className="form-actions">
+        <button className="btn btn--primary" type="submit" disabled={isSaving}>
           {isSaving ? 'Salvando…' : partnership ? 'Salvar' : 'Cadastrar'}
         </button>
-        <button className="partnerships-btn" type="button" onClick={onCancel}>
+        <button className="btn btn--secondary" type="button" onClick={onCancel}>
           Cancelar
         </button>
         {partnership && onDelete ? (
           <button
-            className="partnerships-btn partnerships-btn--danger"
+            className="btn btn--danger"
             type="button"
             onClick={() => onDelete(partnership.id)}
           >

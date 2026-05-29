@@ -1,12 +1,10 @@
-import '@/shared/components/feature-ui.css';
-
 type FeatureAlertProps = {
   message: string;
 };
 
 export function FeatureAlert({ message }: FeatureAlertProps) {
   return (
-    <p className="feature-alert" role="alert">
+    <p className="alert alert--error" role="alert">
       {message}
     </p>
   );

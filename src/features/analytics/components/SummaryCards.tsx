@@ -1,5 +1,7 @@
 import type { AnalyticsSummary } from '@/features/analytics/types/analytics';
 import { DEAL_STAGES, DEAL_STAGE_LABELS } from '@/features/crm/types/stage';
+import { Card } from '@/shared/components/Card';
+import { KpiCard } from '@/shared/components/KpiCard';
 import '@/features/analytics/components/analytics.css';
 
 type SummaryCardsProps = {
@@ -14,23 +16,14 @@ export function SummaryCards({ summary }: SummaryCardsProps) {
 
   return (
     <>
-      <div className="analytics-grid">
-        <article className="analytics-card">
-          <p className="analytics-card__label">Empresas</p>
-          <p className="analytics-card__value">{summary.companiesTotal}</p>
-        </article>
-        <article className="analytics-card">
-          <p className="analytics-card__label">Oportunidades (CRM)</p>
-          <p className="analytics-card__value">{dealsTotal}</p>
-        </article>
-        <article className="analytics-card">
-          <p className="analytics-card__label">Visitas no mês</p>
-          <p className="analytics-card__value">{summary.visitsThisMonth}</p>
-        </article>
+      <div className="grid grid--kpis">
+        <KpiCard label="Empresas" value={summary.companiesTotal} />
+        <KpiCard label="Oportunidades (CRM)" value={dealsTotal} />
+        <KpiCard label="Visitas no mês" value={summary.visitsThisMonth} />
       </div>
 
-      <section className="analytics-stages" aria-labelledby="deals-by-stage-title">
-        <h2 id="deals-by-stage-title">Oportunidades por estágio</h2>
+      <div className="section-spaced">
+        <Card title="Oportunidades por estágio" flushTop>
         <ul className="analytics-stages__list">
           {DEAL_STAGES.map((stage) => (
             <li key={stage} className="analytics-stages__item">
@@ -39,7 +32,8 @@ export function SummaryCards({ summary }: SummaryCardsProps) {
             </li>
           ))}
         </ul>
-      </section>
+        </Card>
+      </div>
     </>
   );
 }

@@ -4,6 +4,16 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  server: {
+    host: '127.0.0.1',
+    port: 5190,
+    strictPort: true,
+  },
+  preview: {
+    host: '127.0.0.1',
+    port: 5191,
+    strictPort: true,
+  },
   plugins: [
     react(),
     VitePWA({
@@ -13,8 +23,8 @@ export default defineConfig({
         name: 'GeoGrowth',
         short_name: 'GeoGrowth',
         description: 'Crescimento territorial offline-first',
-        theme_color: '#0d9488',
-        background_color: '#f8fafc',
+        theme_color: '#0c1222',
+        background_color: '#f4f6f8',
         display: 'standalone',
         lang: 'pt-BR',
         start_url: '/',

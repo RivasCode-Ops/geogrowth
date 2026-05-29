@@ -43,7 +43,11 @@ export function VisitsTable({ visits, onEdit }: VisitsTableProps) {
               </td>
               <td>{visit.notes || '—'}</td>
               <td>
-                <button type="button" className="visits-btn" onClick={() => onEdit(visit.id)}>
+                <button
+                  type="button"
+                  className="btn btn--sm btn--secondary"
+                  onClick={() => onEdit(visit.id)}
+                >
                   Editar
                 </button>
               </td>

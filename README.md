@@ -17,7 +17,7 @@ npm install
 npm run dev
 ```
 
-Abra [http://localhost:5173](http://localhost:5173).
+Abra **http://127.0.0.1:5190** (porta fixa do GeoGrowth — evita conflito com outros projetos Vite na 4173/5173/5174).
 
 ```bash
 npm run typecheck   # verificação de tipos
@@ -29,7 +29,13 @@ npm run preview     # preview do build
 
 - Após `npm run build`, o service worker é gerado em `dist/` (Workbox).
 - **Backup JSON**: em **Loja**, exporte ou importe todas as tabelas IndexedDB (import substitui dados locais).
-- Ícones PWA placeholder em `public/icons/` (substitua em produção).
+- Favicon SVG em `public/favicon.svg`; ícones PNG em `public/icons/` (substitua em produção).
+- Barra superior indica **local-first** e status online/offline (sem sync em nuvem nesta versão).
+- Checklist de validação: [TESTE-MANUAL.md](./TESTE-MANUAL.md).
+
+## UI
+
+Design system em `src/shared/styles/design-system.css` e tokens em `src/core/theme/tokens.css`. Paleta grafite + teal, cards e formulários unificados em todas as rotas.
 
 ## Estrutura
 

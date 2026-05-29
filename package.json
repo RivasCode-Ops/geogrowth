@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview --port 5191 --strictPort",
-    "preview:lan": "vite preview --host 0.0.0.0 --port 5191 --strictPort"
+    "preview:lan": "vite preview --host 0.0.0.0 --port 5191 --strictPort",
+    "build:pages": "tsc -b && vite build --base=/geogrowth/",
+    "preview:pages": "npm run build:pages && vite preview --host 127.0.0.1 --port 5191 --strictPort --base=/geogrowth/"
   },
   "dependencies": {
     "dexie": "^4.0.11",

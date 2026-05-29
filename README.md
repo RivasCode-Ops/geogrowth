@@ -28,6 +28,20 @@ npm run preview:lan # preview acessível no celular (mesma Wi-Fi)
 
 **Celular (PWA):** rode `npm run build` e depois `npm run preview:lan`. No telefone, abra `http://<IP-do-PC>:5191` (ex.: `http://192.168.0.109:5191`). O Vite mostra o IP em `Network:` no terminal.
 
+## Publicar na web (GitHub Pages)
+
+1. No GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+2. Cada push em `main` dispara o workflow **Deploy GitHub Pages**.
+3. URL pública: **https://rivascode-ops.github.io/geogrowth/**
+
+Local (simular Pages):
+
+```bash
+npm run preview:pages
+```
+
+Abra http://127.0.0.1:5191/geogrowth/
+
 ## PWA e backup
 
 - Após `npm run build`, o service worker é gerado em `dist/` (Workbox).

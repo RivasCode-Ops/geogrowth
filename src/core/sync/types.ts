@@ -12,9 +12,17 @@ export type SyncPushResult = {
   pushedAt: string;
 };
 
+export type SyncPullResult = {
+  ok: true;
+  message: string;
+  pulledAt: string;
+  payload: SyncPushPayload;
+};
+
 export type SyncAdapter = {
   readonly name: string;
   push(payload: SyncPushPayload): Promise<SyncPushResult>;
+  pull(tenantId: string, storeId: string): Promise<SyncPullResult>;
 };
 
 export type SyncSummary = {

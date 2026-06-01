@@ -14,6 +14,7 @@ export function AppTopbar() {
   const error = useSyncStore((s) => s.error);
   const refreshSummary = useSyncStore((s) => s.refreshSummary);
   const pushNow = useSyncStore((s) => s.pushNow);
+  const pullNow = useSyncStore((s) => s.pullNow);
 
   useEffect(() => {
     const handleOnline = () => setOnline(true);
@@ -55,22 +56,25 @@ export function AppTopbar() {
         ) : null}
         {error ? <span className="app-topbar__hint app-topbar__hint--error">{error}</span> : null}
         {!isConfigured && !error ? (
-          <span className="app-topbar__hint">Configure VITE_SYNC_PUSH_URL para sync</span>
+          <span className="app-topbar__hint">Configure VITE_SYNC_PUSH_URL</span>
         ) : null}
         <button
           type="button"
           className="btn btn--secondary btn--sm"
-          disabled={!online || isSyncing || pendingCount === 0}
+          disabled={!online || isSyncing || !isConfigured || pendingCount === 0}
           onClick={() => void pushNow()}
-          title={
-            !online
-              ? 'Conecte-se à internet para sincronizar'
-              : pendingCount === 0
-                ? 'Nenhum dado pendente'
-                : 'Enviar pendências ao servidor'
-          }
+          title="Enviar pendências ao servidor"
         >
-          {isSyncing ? 'Sincronizando…' : 'Sincronizar'}
+          {isSyncing ? '…' : 'Enviar'}
+        </button>
+        <button
+          type="button"
+          className="btn btn--secondary btn--sm"
+          disabled={!online || isSyncing || !isConfigured}
+          onClick={() => void pullNow()}
+          title="Baixar dados consolidados do servidor"
+        >
+          {isSyncing ? '…' : 'Baixar'}
         </button>
       </div>
     </header>

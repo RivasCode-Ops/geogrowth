@@ -2,6 +2,7 @@ import { db } from '@/core/db';
 import { DB_VERSION } from '@/core/db/schema';
 import { nowIso } from '@/core/utils/timestamps';
 import { createSyncAdapter } from '@/core/sync/create-sync-adapter';
+import { mergePullPayload } from '@/core/sync/sync-merge.repository';
 import {
   collectPendingData,
   countPending,
@@ -10,10 +11,17 @@ import {
 } from '@/core/sync/sync-queue.repository';
 import type { SyncPushPayload, SyncSummary } from '@/core/sync/types';
 import { SyncError } from '@/core/sync/types';
+
 export type SyncRunResult = {
   summary: SyncSummary;
   message: string;
   pushedAt: string;
+};
+
+export type SyncPullRunResult = {
+  message: string;
+  pulledAt: string;
+  mergedCount: number;
 };
 
 async function buildPushPayload(
@@ -66,7 +74,17 @@ export const syncService = {
       const result = await adapter.push(payload);
       await markStoreScopeSynced(storeId);
       return {
-        summary: { ...summary, total: 0, byTable: { stores: 0, companies: 0, territories: 0, deals: 0, visits: 0, partnerships: 0 } },
+        summary: {
+          total: 0,
+          byTable: {
+            stores: 0,
+            companies: 0,
+            territories: 0,
+            deals: 0,
+            visits: 0,
+            partnerships: 0,
+          },
+        },
         message: result.message,
         pushedAt: result.pushedAt,
       };
@@ -74,5 +92,18 @@ export const syncService = {
       await markStoreScopeError(storeId);
       throw err;
     }
+  },
+
+  async pullActiveStore(): Promise<SyncPullRunResult> {
+    const { tenantId, storeId } = await this.getActiveStoreScope();
+    const adapter = createSyncAdapter();
+    const result = await adapter.pull(tenantId, storeId);
+    const { mergedCount } = await mergePullPayload(result.payload, storeId);
+
+    return {
+      message: `${result.message} ${mergedCount} registro(s) aplicado(s).`,
+      pulledAt: result.pulledAt,
+      mergedCount,
+    };
   },
 };

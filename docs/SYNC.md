@@ -1,73 +1,65 @@
-# GeoGrowth — Sync em nuvem (Fase 1)
+# GeoGrowth — Sync em nuvem
 
-## Objetivo
+## Fase 1 — Push (enviar)
 
-Enviar alterações locais (IndexedDB) para um endpoint HTTP configurável, sem acoplar o app a um provedor específico nesta fase.
+1. Ao salvar, `syncStatus` → `pending`.
+2. Topbar mostra pendências.
+3. **Enviar** → `POST` em `VITE_SYNC_PUSH_URL`.
+4. Sucesso → `synced` | Falha → `error`.
 
-## Fluxo
+## Fase 2 — Pull (baixar)
 
-1. Ao salvar entidades, `syncStatus` passa a `pending` (ou permanece `local` / `error` até sync).
-2. A topbar mostra contagem de pendências.
-3. **Sincronizar** envia `POST` JSON para `VITE_SYNC_PUSH_URL`.
-4. Sucesso → registros do escopo da loja ativa ficam `synced`.
-5. Falha → escopo marcado como `error` (retry manual).
+1. Servidor mantém `_canonical.json` por tenant/loja (merge por `id` + `updatedAt`).
+2. **Baixar** → `GET` …/sync/pull?tenantId=&storeId=
+3. App faz merge local (last-write-wins por `updatedAt`) e recarrega a página.
 
-## Payload (`SyncPushPayload`)
+## Configuração local
 
-Mesma estrutura do backup (`app`, `dbVersion`, `exportedAt`, `data`), mais:
-
-- `tenantId`, `storeId`, `pendingTotal`
-- `data` contém **apenas** registros com status `local`, `pending` ou `error`
-
-## Configuração
-
-```bash
-cp .env.example .env
-# Edite VITE_SYNC_PUSH_URL=https://...
-# Se a API exige chave: VITE_SYNC_API_KEY=mesmo-valor-de-SYNC_API_KEY
-npm run dev
-```
-
-| Variável | Obrigatória | Descrição |
-|----------|-------------|-----------|
-| `VITE_SYNC_PUSH_URL` | Sim (para sync) | URL do `POST` push |
-| `VITE_SYNC_API_KEY` | Não | Enviada no header `X-API-Key` quando definida |
-
-Sem URL: o botão **Sincronizar** informa que o endpoint não está configurado.
-
-> **Nota:** em PWA o valor de `VITE_*` fica no bundle do cliente. Use chave só para ambiente controlado ou troque por proxy/backend na Fase 2.
-
-## Contrato mínimo do servidor (Fase 1)
-
-- Método: `POST`
-- Header: `Content-Type: application/json`
-- Resposta: `2xx` para aceitar o lote
-- Corpo: persistir JSON como snapshot ou ingerir por tabela (implementação sua)
-
-## API oficial (repo irmão)
-
-Implementação pronta: **`geogrowth-sync-api`** (`c:\_PROJETOS\geogrowth-sync-api`).
+Terminal 1 — API:
 
 ```powershell
-cd c:\_PROJETOS\geogrowth-sync-api
-npm install
-copy .env.example .env
+cd c:\_PROJETOS\geogrowth
+npm run sync:api
+```
+
+Terminal 2 — App:
+
+```powershell
+cp .env.example .env
 npm run dev
 ```
 
-No app:
+`.env` do app:
 
 ```env
 VITE_SYNC_PUSH_URL=http://127.0.0.1:8787/api/geogrowth/sync/push
-# Se SYNC_API_KEY estiver definida na API:
-# VITE_SYNC_API_KEY=sua-chave-dev
+# Pull derivado automaticamente (/pull). Opcional:
+# VITE_SYNC_PULL_URL=http://127.0.0.1:8787/api/geogrowth/sync/pull
+# VITE_SYNC_API_KEY=mesma-chave-da-api
 ```
 
-Snapshots em `data/snapshots/{tenantId}/{storeId}/`. Ver README da API.
+| Variável | Descrição |
+|----------|-----------|
+| `VITE_SYNC_PUSH_URL` | POST push |
+| `VITE_SYNC_PULL_URL` | GET pull (opcional) |
+| `VITE_SYNC_API_KEY` | Header `X-API-Key` |
 
-## Próximas fases (não implementadas)
+## API (`geogrowth-sync-api`)
 
-- Pull / merge bidirecional com `updatedAt`
-- Auth (API key / OAuth)
-- Adapter Supabase ou fila realtime
-- Resolução de conflitos
+| Método | Rota |
+|--------|------|
+| POST | `/api/geogrowth/sync/push` |
+| GET | `/api/geogrowth/sync/pull?tenantId=&storeId=` |
+| GET | `/api/geogrowth/sync/last?tenantId=&storeId=` (meta) |
+
+Repo: `c:\_PROJETOS\geogrowth-sync-api`
+
+## Teste rápido
+
+1. Cadastre loja + empresas no app.
+2. **Enviar** → snapshot na API.
+3. Em outro navegador/dispositivo (mesma loja) → **Baixar**.
+
+## Próximo (Fase 3)
+
+- Auth por loja, Postgres, conflitos explícitos, sync automático.

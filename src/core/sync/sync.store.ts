@@ -12,6 +12,7 @@ type SyncState = {
   error: string | null;
   refreshSummary: () => Promise<void>;
   pushNow: () => Promise<void>;
+  pullNow: () => Promise<void>;
 };
 
 const emptySummary: SyncSummary = {
@@ -46,7 +47,7 @@ export const useSyncStore = create<SyncState>((set) => ({
   },
 
   pushNow: async () => {
-    set({ isSyncing: true, error: null });
+    set({ isSyncing: true, error: null, lastMessage: null });
     try {
       const result = await syncService.pushActiveStore();
       set({
@@ -61,7 +62,7 @@ export const useSyncStore = create<SyncState>((set) => ({
           ? err.message
           : err instanceof Error
             ? err.message
-            : 'Falha ao sincronizar.';
+            : 'Falha ao enviar.';
       set({ isSyncing: false, error: message });
       try {
         const { storeId } = await syncService.getActiveStoreScope();
@@ -70,6 +71,30 @@ export const useSyncStore = create<SyncState>((set) => ({
       } catch {
         /* ignore */
       }
+    }
+  },
+
+  pullNow: async () => {
+    set({ isSyncing: true, error: null, lastMessage: null });
+    try {
+      const result = await syncService.pullActiveStore();
+      const { storeId } = await syncService.getActiveStoreScope();
+      const summary = await syncService.getPendingSummary(storeId);
+      set({
+        isSyncing: false,
+        summary,
+        lastMessage: result.message,
+        isConfigured: isSyncConfigured(),
+      });
+      window.setTimeout(() => window.location.reload(), 400);
+    } catch (err) {
+      const message =
+        err instanceof SyncError
+          ? err.message
+          : err instanceof Error
+            ? err.message
+            : 'Falha ao baixar.';
+      set({ isSyncing: false, error: message });
     }
   },
 }));
